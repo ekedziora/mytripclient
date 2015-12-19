@@ -35,52 +35,24 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
 
 .factory('repository', ['$http', '$localStorage', function($http, $localStorage){
   var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
-  function changeUser(user) {
-    angular.extend(currentUser, user);
-  }
-
-  function urlBase64Decode(str) {
-    var output = str.replace('-', '+').replace('_', '/');
-    switch (output.length % 4) {
-      case 0:
-        break;
-      case 2:
-        output += '==';
-        break;
-      case 3:
-        output += '=';
-        break;
-      default:
-        throw 'Illegal base64url string!';
-    }
-    return window.atob(output);
-  }
-
-  function getUserFromToken() {
-    var token = $localStorage.token;
-    var user = {};
-    if (typeof token !== 'undefined') {
-      var encoded = token.split('.')[1];
-      user = JSON.parse(urlBase64Decode(encoded));
-    }
-    return user;
-  }
-
-  var currentUser = getUserFromToken();
 
   return {
-    signIn: function(data, success, error) {
-      $http.post(baseUrl + 'auth/token', data).success(success).error(error)
+    signin: function(data, success, error) {
+      $http.post(baseUrl + 'auth/token', $.param(data), {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+      }).success(success).error(error)
+    },
+    register: function(data, success, error) {
+      $http.post(baseUrl + 'account/register', data).success(success).error(error)
     },
     logout: function(success) {
-      changeUser({});
       delete $localStorage.token;
       success();
     }
   };
 }])
 
-.controller('SignInController', ['$scope', 'repository', function($scope, repository) {
+.controller('SignInController', ['$scope', 'repository', '$localStorage','$location', function($scope, repository, $localStorage, $location) {
   $scope.signIn = function () {
     var formData = {
       grant_type: "password",
@@ -88,12 +60,16 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
       password: $scope.password
     };
 
-    repository.signIn(formData,
+    // czyszczenie tymczasowo bo na serwerze leci wyjątek prawdopodobnie jak interceptor dołączy token do tego requestu
+    delete $localStorage.token;
+
+    repository.signin(formData,
       function(res) {
-        console.log(res.data);
+        $localStorage.token = res.access_token;
+        $location.path('/trips');
       },
       function(res) {
-        console.log(res.data);
+        $scope.error = res.error_description;
       }
     );
   }

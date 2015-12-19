@@ -6,6 +6,7 @@
     </div>
     <div class="col-md-3">
         <div class="sidebar-nav pull-right affix">
+            <div class="alert alert-danger" ng-if="error">{{ error }}</div>
             <h2 class="col-md-12">Sign in</h2>
             <form id="signInForm" method="post" ng-submit="signIn()" role="form">
                 <div class="form-group">
