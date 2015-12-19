@@ -1,0 +1,25 @@
+<div class="container" ng-controller="SignInController">
+    <div class="col-md-9">
+        <div class="img-rounded">
+            <img src="https://pbs.twimg.com/media/BHL0K4MCEAAUq7o.jpg">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="sidebar-nav pull-right affix">
+            <h2 class="col-md-12">Sign in</h2>
+            <form id="signInForm" method="post" ng-submit="signIn()" role="form">
+                <div class="form-group">
+                <input type="text" placeholder="username" class="form-control" ng-model="username"/>
+                </div>
+                <div class="form-group">
+                <input type="password" placeholder="password" class="form-control" ng-model="password"/>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<input id="rememberMeCheck" type="checkbox" ng-model="rememberMe"/>-->
+                    <!--<label for="rememberMeCheck">Remember me</label>-->
+                <!--</div>-->
+                <button type="submit" class="btn btn-default col-md-offset-4">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
