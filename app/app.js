@@ -3,11 +3,16 @@
 // Declare app level module which depends on views, and components
 angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
 .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+
   $routeProvider
       .otherwise({redirectTo: '/trips'})
       .when('/signIn', {
         templateUrl: 'signIn/signIn.html',
         controller: 'SignInController'
+      })
+      .when('/signUp', {
+        templateUrl: 'signUp/signUp.html',
+        controller: 'SignUpController'
       })
       .when('/trips', {
         templateUrl: 'trips/trips.html',
@@ -31,6 +36,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
       }
     };
   }]);
+
 }])
 
 .factory('repository', ['$http', '$localStorage', function($http, $localStorage){
@@ -44,6 +50,9 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
     },
     register: function(data, success, error) {
       $http.post(baseUrl + 'account/register', data).success(success).error(error)
+    },
+    signUp: function(data, success, error) {
+      $http.post(baseUrl + 'Account/Register', data).success(success).error(error)
     },
     logout: function(success) {
       delete $localStorage.token;
@@ -71,6 +80,24 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
       function(res) {
         $scope.error = res.error_description;
       }
+    );
+  }
+}])
+
+.controller('SignUpController', ['$scope', '$location', 'repository', function($scope, $location, repository) {
+  $scope.signUp = function () {
+    var formData = {
+      username: $scope.username,
+      password: $scope.password
+    };
+
+    repository.signUp(formData,
+        function(res) {
+          $location.url('/signIn')
+        },
+        function(res) {
+          $scope.message = res['ModelState'][""][0];
+        }
     );
   }
 }])
