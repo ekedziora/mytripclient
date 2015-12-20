@@ -11,8 +11,8 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', 'repository',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, repository) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService) {
 
             /*repository.getTrips(
              function(res) {
@@ -52,9 +52,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     $scope.waypoints = null;
                 else
                     $scope.waypoints = $scope.map.markers;
-            }
+            };
 
-            $scope.markers = [{"id": 1, "latitude": 46, "longitude": -79, "showWindow": false, "show": false}]
+            $scope.trackings = [{
+                id: 1,
+                geotracks: []
+            }];
+
             uiGmapGoogleMapApi.then(function (maps) {
                 $scope.map =
                 {
@@ -76,10 +80,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                                 }
                             };
                             $scope.map.markers.push(marker);
-                            console.log($scope.map.markers);
+                            if($scope.map.markers.length > 0) {
+                                $scope.trackings[0].geotracks.push({latitude: marker.coords.latitude, longitude: marker.coords.longitude});
+                            }
                             $scope.$apply();
+                            console.log($scope.trackings);
                         }
-                    },
+                    }
                 };
             });
         }])

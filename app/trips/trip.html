@@ -4,7 +4,17 @@
         <div class="img-rounded">
             <ui-gmap-google-map center='map.center' zoom='map.zoom' draggable='true' events='map.events'>
                 <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+                <ui-gmap-polylines models="trackings" path="'geotracks'" static="true"></ui-gmap-polylines>
             </ui-gmap-google-map>
+        </div>
+        <div>
+            <fieldset class="form-group">
+                <br>
+                <label for="exampleInputEmail1">Enter a name for the trip:</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
+                <small class="text-muted">The trip will be saved for later use</small>
+            </fieldset>
+        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save trip route</button>
         </div>
     </div>
     <div class="col-md-3">
@@ -27,7 +37,7 @@
 
             <!-- Waypoints -->
             <a href="" class="list-group-item" ng-click="listWaypoints()">
-                <span class = "badge">{{map.markers.length}}</span></h4>
+                <span class = "badge">{{map.markers.length}}</span>
                 <h4 class="list-group-item-heading">Waypoints </h4>
             </a>
             <div class="list-group" ng-show="waypoints">

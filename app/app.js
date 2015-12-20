@@ -55,7 +55,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
             signUp: function(data, success, error) {
                 $http.post(baseUrl + 'Account/Register', data).success(success).error(error)
             },
-            getTrips: function(success, error) {
+            getTrips: function(success, error) {//to jakby przeniesione do tripsService
                 $http.get(baseUrl + "Trip").success(success).error(error)
             },
             logout: function(success) {
@@ -118,16 +118,4 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
         }
     }])
 
-    .controller('TripssController', ['$scope', 'repository', function($scope, repository) {
-
-        var s = {};
-
-        repository.getTrips(
-            function(res) {
-                $scope.trips = res;
-            },
-            function(res) {
-                console.log(res);
-            }
-        );
-    }]);
+;
