@@ -35,7 +35,7 @@
         <!-- add trip view-->
         <div class="col-sm-3">
             <div class="trip-box-frame">
-                <div id="trip-box-new" ng-click="">
+                <div ng-controller="EditTripController" id="trip-box-new" ng-click="createTrip()">
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
 </div>
 
 <!-- Edit trip view -->
-<!--<table style="position:fixed;top:0;width:100%;height:100%;background:rgba(0,0,0,0.5);" ng-controller="EditTripController">-->
+<!--<table ng-show="requested" style="position:fixed;top:0;width:100%;height:100%;background:rgba(0,0,0,0.5);" ng-controller="EditTripController">-->
     <!--<td align="center">-->
         <!--<div style="background-color:#e6e6e6;width:100%;max-width:320px;min-width:256px;padding:16px;text-align:left;">-->
             <!--<h3>Edit trip</h3>-->
