@@ -18,6 +18,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             tripsService.getTrips(
                 function (res) {
+                    console.log(res);
                     //res mocked for now
                     res = mockedTripsResponse;
                     $scope.preview=res.slice(0, 3);
@@ -84,8 +85,8 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 };
             });
         }])
-    .controller('EditTripController', ['$scope', '$filter', 'TripsService', '$routeParams',
-        function ($scope, $filter, tripsService, $routeParams) {
+    .controller('EditTripController', ['$scope', '$filter', 'TripsService',
+        function ($scope, $filter, tripsService) {
 
             $scope.openEdit = function(id) {
                 $scope.editedTrip = id;
@@ -112,13 +113,26 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     // create new trip
                     console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
                     //post request
+                    //tripsService.insertTripRoute(
+                    //    {
+                    //        name: $scope.tripName,
+                    //        desc: $scope.tripDesc,
+                    //        file: $scope.tripFile
+                    //    },
+                    //    function (res) {
+                    //        console.log(res);
+                    //    },
+                    //    function (res) {
+                    //        console.log(res);
+                    //    }
+                    //);
                 }
                 else {
                     // update trip
                     console.log("saving a trip object");
                 }
 
-                $scope.requested = false;
+                //$scope.requested = false;
             };
 
         }])
@@ -128,10 +142,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         return {
             getTrips: function (success, error) {
-                $http.get(baseUrl + 'trip').success(success).error(error)
+                $http.get(baseUrl + 'Trip?limit=3&offset=0').then(success, error);
             },
+            
             insertTripRoute: function (data, success, error) {
-                $http.post(baseUrl + 'trip/insert', data).success(success).error(error)
+                $http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, 'test',
+                    {headers: {'Content-Type': 'undefined'}
+                }).then(success, error);
             }
         };
     }]);
