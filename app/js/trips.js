@@ -15,13 +15,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         function ($scope, $filter, uiGmapGoogleMapApi, tripsService, repository) {
 
             /*repository.getTrips(
-                function(res) {
-                    $scope.trips = res;
-                },
-                function(res) {
-                    console.log(res);
-                }
-            );*/
+             function(res) {
+             $scope.trips = res;
+             },
+             function(res) {
+             console.log(res);
+             }
+             );*/
 
             //todo to throw
             $scope.getTrips = function () {
@@ -42,7 +42,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     //res mocked for now
                     res = mockedTripsResponse;
                     $scope.trips = res;
-                    $scope.photo = $filter('filter')(mockedPhotos, {tripId: res[0].Id, defaultBigThumbnail: true}, true);
+                    $scope.photo = $filter('filter')(mockedPhotos, {
+                        tripId: res[0].Id,
+                        defaultBigThumbnail: true
+                    }, true);
                 },
                 function (res) {
                     console.log(res);
@@ -73,7 +76,24 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         latitude: 52,
                         longitude: 20
                     },
-                    zoom: 6
+                    zoom: 6,
+                    markers: [],
+                    events: {
+                        click: function (map, eventName, originalEventArgs) {
+                            var e = originalEventArgs[0];
+                            var lat = e.latLng.lat(), lon = e.latLng.lng();
+                            var marker = {
+                                id: Date.now(),
+                                coords: {
+                                    latitude: lat,
+                                    longitude: lon
+                                }
+                            };
+                            $scope.map.markers.push(marker);
+                            console.log($scope.map.markers);
+                            $scope.$apply();
+                        }
+                    },
                 };
             });
         }])
