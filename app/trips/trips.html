@@ -22,10 +22,15 @@
     </div>
 </nav>
 
-<div class="container" ng-controller="TripsController">
-    <h3>Welcome, you are now signed in!</h3>
-    <h6>Discover public trips</h6>
+<div class="container-fluid" style="text-align:center;margin:24px;">
+    <!-- Browse/Discover switcher -->
+    <ul class="pagination">
+        <li class="active"><a href="#">Browse</a></li>
+        <li class="disabled"><a href="#">Discover</a></li>
+    </ul>
+</div>
 
+<div class="container" ng-controller="TripsController">
     <div class="container">
         <div class="row">
 
@@ -46,4 +51,10 @@
 
         </div>
     </div>
+</div>
+
+<!-- Footer -->
+<hr style="border-color: #cdcdcd;">
+<div class="container" style="text-align:center;">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu diam. Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare accumsan, blandit sed diam.</p>
 </div>
