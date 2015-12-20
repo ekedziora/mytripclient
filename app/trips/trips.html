@@ -80,22 +80,22 @@
     <td align="center">
         <div style="background-color:#e6e6e6;width:100%;max-width:320px;min-width:256px;padding:16px;text-align:left;">
             <h3>Edit trip</h3>
-            <form role="form">
+            <form role="form" id="editForm" method="post" ng-submit="saveEdit()">
                 <div id="trip-edit-thumbnail"></div>
                 <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name">
+                    <label for="tripname">Name:</label>
+                    <input type="text" class="form-control" id="tripname" required ng-model="tripName">
                 </div>
                 <div class="form-group">
-                    <label for="desc">Description:</label>
-                    <textarea class="form-control" rows="3" id="desc" style="resize: none;"></textarea>
+                    <label for="tripdesc">Description:</label>
+                    <textarea class="form-control" rows="3" id="tripdesc" style="resize: none;" required ng-model="tripDesc"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="route">Route:</label>
-                    <input type="file" class="file" id="route">
+                    <label for="triproute">Route:</label>
+                    <input type="file" class="file" id="triproute" required ng-model="tripFile">
                 </div>
                 <button type="button" class="btn btn-default" ng-click="closeEdit()">Cancel</button>
-                <button type="submit" class="btn btn-default" ng-click="saveEdit()">Save</button>
+                <button type="submit" class="btn btn-default">Save</button>
             </form>
         </div>
     </td>

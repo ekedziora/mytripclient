@@ -86,9 +86,19 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService', '$routeParams',
         function ($scope, $filter, tripsService, $routeParams) {
-            
+
             $scope.openEdit = function(id) {
                 $scope.editedTrip = id;
+
+                if(id != null) {
+                    // load data
+                }
+                else {
+                    $scope.tripName = null;
+                    $scope.tripDesc = null;
+                    $scope.tripFile = null;
+                }
+
                 $scope.requested = true;
             };
 
@@ -100,12 +110,15 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.saveEdit = function() {
                 if($scope.editedTrip == null) {
                     // create new trip
-                    console.log("creating a trip object");
+                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
+                    //post request
                 }
                 else {
                     // update trip
                     console.log("saving a trip object");
                 }
+
+                $scope.requested = false;
             };
 
         }])
