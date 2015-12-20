@@ -30,27 +30,40 @@
     </ul>
 </div>
 
-<div class="container" ng-controller="TripsController">
-    <div class="container">
-        <div class="row">
+<div class="container" ng-controller="TripsController" style="text-align: center;">
+    <div class="row" style="text-align: left;">
+        <!-- add trip view-->
+        <div class="col-sm-3">
+            <div class="trip-box-frame">
+                <div id="trip-box-new">
+                </div>
+            </div>
+        </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="trip in trips | filter:{IsPublic:true}">
-                <div class="dummy"></div>
-                <a  href="#" class="thumbnail purple">
-                    <img ng-src="{{photo[0].bigThumbnailUrl}}"/>
-                    <div>Id: {{ trip.Id }}</div>
-                    <div>Date: {{ trip.Date }}</div>
-                </a>
+        <div class="col-sm-3" ng-repeat="trip in preview | filter:{IsPublic:false}">
+
+            <div class="trip-box-frame">
+                <div class="trip-box-loaded">
+                    <div class="trip-box-thumbnail">
+                        <img ng-src="{{photo[0].bigThumbnailUrl}}"/>
+                    </div>
+                    <div class="trip-box-name"></div>
+                    <div class="trip-box-owner"></div>
+                    <div class="trip-box-description"></div>
+                    <div class="trip-box-menu">
+                        <div class="action-button glyphicon glyphicon-globe"></div>
+                        <div class="action-button glyphicon glyphicon-camera"></div>
+                        <div class="action-button glyphicon glyphicon-eye-open"></div>
+                        <div class="action-button glyphicon glyphicon-pencil"></div>
+                    </div>
+                </div>
             </div>
 
         </div>
     </div>
-    <div class="container">
-        <div class="col-md-3" >
 
-
-        </div>
-    </div>
+    <!-- Expand button -->
+    <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed"></span>
 </div>
 
 <!-- Footer -->
