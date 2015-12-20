@@ -14,7 +14,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li ng-if="!username"><a href="#/signIn"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
-                <li ng-if="username"><a href="#/signIn"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
+                <li ng-if="username"><a href="#/signIn" ng-click="signOut()"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
                 <li ng-if="username"><a href="#"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
             <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="trip in trips | filter:{IsPublic:true}">
                 <div class="dummy"></div>
                 <a  href="#" class="thumbnail purple">
-                    <img src="{{photo[0].bigThumbnailUrl}}"/>
+                    <img ng-src="{{photo[0].bigThumbnailUrl}}"/>
                     <div>Id: {{ trip.Id }}</div>
                     <div>Date: {{ trip.Date }}</div>
                 </a>

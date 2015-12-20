@@ -43,7 +43,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
 
     }])
 
-    .factory('repository', ['$http', '$localStorage', function($http, $localStorage){
+    .service('IdentityService', ['$http', '$localStorage', function($http, $localStorage){
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
 
         return {
@@ -55,22 +55,25 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
             signUp: function(data, success, error) {
                 $http.post(baseUrl + 'Account/Register', data).success(success).error(error)
             },
-            logout: function(success) {
+            logout: function() {
                 delete $localStorage.user;
-                success();
             }
         };
     }])
 
-    .controller('IdentityController', ['$scope', '$localStorage', function($scope, $localStorage) {
+    .controller('IdentityController', ['$scope', '$localStorage', 'IdentityService', function($scope, $localStorage, IdentityService) {
         if ($localStorage.user) {
             if ($localStorage.user.username) {
                 $scope.username = $localStorage.user.username;
             }
         }
+
+        $scope.signOut = function() {
+            IdentityService.logout();
+        }
     }])
 
-    .controller('SignInController', ['$scope', 'repository', '$localStorage','$location', function($scope, repository, $localStorage, $location) {
+    .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', function($scope, IdentityService, $localStorage, $location) {
         $scope.signIn = function () {
             var formData = {
                 grant_type: "password",
@@ -81,7 +84,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
             // czyszczenie tymczasowo bo na serwerze leci wyjątek prawdopodobnie jak interceptor dołączy token do tego requestu
             delete $localStorage.user;
 
-            repository.signIn(formData,
+            IdentityService.signIn(formData,
                 function(res) {
                     var user = {
                         username: $scope.username,
@@ -97,14 +100,14 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
         }
     }])
 
-    .controller('SignUpController', ['$scope', '$location', 'repository', function($scope, $location, repository) {
+    .controller('SignUpController', ['$scope', '$location', 'IdentityService', function($scope, $location, IdentityService) {
         $scope.signUp = function () {
             var formData = {
                 username: $scope.username,
                 password: $scope.password
             };
 
-            repository.signUp(formData,
+            IdentityService.signUp(formData,
                 function(res) {
                     $location.url('/signIn')
                 },
