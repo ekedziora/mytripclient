@@ -18,6 +18,10 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
                 templateUrl: 'trips/trips.html',
                 controller: 'TripsController'
             })
+            .when('/trip/:id', {
+                templateUrl: 'trips/trip.html',
+                controller: 'TripsController'
+            })
             .when('/trip', {
                 templateUrl: 'trips/trip.html',
                 controller: 'TripsController'

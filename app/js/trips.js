@@ -11,8 +11,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams) {
+
+            $scope.focusedTrip = $routeParams.id;
+
             tripsService.getTrips(
                 function (res) {
                     //res mocked for now
@@ -28,13 +31,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     console.log(res);
                 }
             );
-
-            $scope.focusedTrip = 1;
-
-            $scope.focusTrip = function(trip) {
-                $scope.focusedTrip = trip.Id;
-                console.log("focused trip " + trip.Id);
-            };
 
             $scope.photos = mockedPhotos;
 
