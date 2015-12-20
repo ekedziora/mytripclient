@@ -6,7 +6,7 @@ mockedTripsResponse = [
     {
         Id: 1,
         Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: true,
+        IsPublic: false,
         route: {
             id: 1,
             points: [
@@ -46,7 +46,7 @@ mockedTripsResponse = [
     {
         Id: 3,
         Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: true,
+        IsPublic: false,
         route: {
             id: 1,
             points: [
@@ -66,7 +66,7 @@ mockedTripsResponse = [
     {
         Id: 4,
         Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: true,
+        IsPublic: false,
         route: {
             id: 1,
             points: [
