@@ -84,8 +84,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 };
             });
         }])
+    .controller('EditTripController', ['$scope', '$filter', 'TripsService', '$routeParams',
+        function ($scope, $filter, tripsService, $routeParams) {
+            
+        }])
     .service('TripsService', ['$http', function ($http) {
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
+        //var baseUrl = "http://mytrippwapi.azurewebsites.net/api";
 
         return {
             getTrips: function (success, error) {

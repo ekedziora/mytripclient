@@ -49,6 +49,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
 
     .service('IdentityService', ['$http', '$localStorage', function($http, $localStorage){
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
+        //var baseUrl = "http://mytrippwapi.azurewebsites.net/api";
 
         return {
             signIn: function(data, success, error) {
