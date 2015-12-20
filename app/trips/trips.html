@@ -1,1 +1,9 @@
-<h3>Welcome, you are now signed in!</h3>
+<div class="container" ng-controller="TripsController">
+    <h3>Welcome, you are now signed in!</h3>
+
+    <div class="container">
+        <div class="col-md-3" ng-repeat="trip in trips">
+            {{ trip }}
+        </div>
+    </div>
+</div>

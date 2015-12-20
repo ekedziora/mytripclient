@@ -51,6 +51,9 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
     signUp: function(data, success, error) {
       $http.post(baseUrl + 'Account/Register', data).success(success).error(error)
     },
+    getTrips: function(success, error) {
+      $http.get(baseUrl + "Trip").success(success).error(error)
+    },
     logout: function(success) {
       delete $localStorage.user;
       success();
@@ -111,6 +114,16 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
   }
 }])
 
-.controller('TripsController', ['$scope', function($scope) {
+.controller('TripsController', ['$scope', 'repository', function($scope, repository) {
 
+  var s = {};
+
+  repository.getTrips(
+      function(res) {
+        $scope.trips = res;
+      },
+      function(res) {
+        console.log(res);
+      }
+  );
 }]);
