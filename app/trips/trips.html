@@ -1,9 +1,25 @@
 <div class="container" ng-controller="TripsController">
     <h3>Welcome, you are now signed in!</h3>
+    <h6>Discover public trips</h6>
 
     <div class="container">
-        <div class="col-md-3" ng-repeat="trip in trips">
-            {{ trip }}
+        <div class="row">
+
+            <div class="col-md-4 col-sm-4 col-xs-6" ng-repeat="trip in trips | filter:{IsPublic:true}">
+                <div class="dummy"></div>
+                <a  href="#" class="thumbnail purple">
+                    <img src="{{photo[0].bigThumbnailUrl}}"/>
+                    <div>Id: {{ trip.Id }}</div>
+                    <div>Date: {{ trip.Date }}</div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="col-md-3" >
+
+
         </div>
     </div>
 </div>

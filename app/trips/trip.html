@@ -32,11 +32,6 @@
             <div class="list-group" ng-show="waypoints">
                 <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">{{waypoint.name}}</a>
             </div>
-            <p>To jest oczywiscie w celach testowych</p>
-            <button ng-click="getTrips()">get trips</button>
-            <ul ng-show="trips">
-                <li ng-repeat="trip in trips">Trip {{trip['Id']}}, date: {{trip['Date']}}</li>
-            </ul>
         </div>
     </div>
 </div>

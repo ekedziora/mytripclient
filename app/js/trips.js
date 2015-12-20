@@ -11,21 +11,45 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', 'uiGmapGoogleMapApi', 'tripsService',
-        function ($scope, uiGmapGoogleMapApi, tripsService) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', 'repository',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, repository) {
+
+            /*repository.getTrips(
+                function(res) {
+                    $scope.trips = res;
+                },
+                function(res) {
+                    console.log(res);
+                }
+            );*/
+
+            //todo to throw
             $scope.getTrips = function () {
                 tripsService.getTrips(
                     function (res) {
                         //res mocked for now
                         res = mockedTripsResponse;
-
                         $scope.trips = res;
                     },
                     function (res) {
                         console.log(res);
                     }
                 )
-            }
+            };
+
+            tripsService.getTrips(
+                function (res) {
+                    //res mocked for now
+                    res = mockedTripsResponse;
+                    $scope.trips = res;
+                    $scope.photo = $filter('filter')(mockedPhotos, {tripId: res[0].Id, defaultBigThumbnail: true}, true);
+                },
+                function (res) {
+                    console.log(res);
+                }
+            );
+
+            $scope.photos = mockedPhotos;
 
             $scope.listPictures = function () {
                 if ($scope.pictures)
@@ -53,18 +77,15 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 };
             });
         }])
-    .service('tripsService', ['$http', function ($http) {
+    .service('TripsService', ['$http', function ($http) {
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
 
         return {
             getTrips: function (success, error) {
-                $http.get(baseUrl + 'trip', {
-                    headers: //poki nie ma interceptora
-                    {"Authorization": "Bearer Z7tKsrol0EUyfwiCob1x05lmF9p8p9rVG5johOaNrXQYU4BjXain1g5v_QZ-beR2Z50FUuFBVCFpZIRybGEEkkz-3uGe1-aoanrx6Q59oz0RClrwU5dMxuU3NaJaD0fpBrEMbDTMHd8L4X4SgoxexkvwM9TItQVYGpVSTGIgvWAMb53cf1PGhU1kI4vq4ekQIoGNyToNHTWdSJJu7jv0rIjO_YCImp6q82JBVbj0lXu9jPSmBl8zwmrUD-zGmRlFSfIfjD1jPozLLQdJrkfmPbXwC5M5jzaXh3uGjXFdmKHF_S3Tikj5F4jio-Yu7mJX"}
-                }).success(success).error(error)
+                $http.get(baseUrl + 'trip').success(success).error(error)
             },
             insertTripRoute: function (data, success, error) {
-                $http.post(baseUrl + 'account/register', data).success(success).error(error)
+                $http.post(baseUrl + 'trip/insert', data).success(success).error(error)
             }
         };
     }]);
