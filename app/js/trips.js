@@ -13,16 +13,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
     .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService',
         function ($scope, $filter, uiGmapGoogleMapApi, tripsService) {
-
-            /*repository.getTrips(
-             function(res) {
-             $scope.trips = res;
-             },
-             function(res) {
-             console.log(res);
-             }
-             );*/
-
             tripsService.getTrips(
                 function (res) {
                     //res mocked for now
