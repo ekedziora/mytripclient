@@ -27,10 +27,15 @@
 
             <!-- Waypoints -->
             <a href="" class="list-group-item" ng-click="listWaypoints()">
-                <h4 class="list-group-item-heading">Waypoints</h4>
+                <span class = "badge">{{map.markers.length}}</span></h4>
+                <h4 class="list-group-item-heading">Waypoints </h4>
             </a>
             <div class="list-group" ng-show="waypoints">
-                <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">{{waypoint.name}}</a>
+                <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
+                    <div>Waypoint id: {{waypoint.id}}</div>
+                    <div>Lat: {{waypoint.coords.latitude}}</div>
+                    <div>Lon: {{waypoint.coords.longitude}}</div>
+                </a>
             </div>
         </div>
     </div>

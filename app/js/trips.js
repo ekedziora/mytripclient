@@ -23,20 +23,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
              }
              );*/
 
-            //todo to throw
-            $scope.getTrips = function () {
-                tripsService.getTrips(
-                    function (res) {
-                        //res mocked for now
-                        res = mockedTripsResponse;
-                        $scope.trips = res;
-                    },
-                    function (res) {
-                        console.log(res);
-                    }
-                )
-            };
-
             tripsService.getTrips(
                 function (res) {
                     //res mocked for now
@@ -65,7 +51,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 if ($scope.waypoints)
                     $scope.waypoints = null;
                 else
-                    $scope.waypoints = mockedWaypoints;
+                    $scope.waypoints = $scope.map.markers;
             }
 
             $scope.markers = [{"id": 1, "latitude": 46, "longitude": -79, "showWindow": false, "show": false}]
