@@ -29,6 +29,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 }
             );
 
+            $scope.focusedTrip = 1;
+
+            $scope.focusTrip = function(trip) {
+                $scope.focusedTrip = trip.Id;
+                console.log("focused trip " + trip.Id);
+            };
+
             $scope.photos = mockedPhotos;
 
             $scope.listPictures = function () {

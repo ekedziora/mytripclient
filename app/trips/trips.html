@@ -35,7 +35,7 @@
         <!-- add trip view-->
         <div class="col-sm-3">
             <div class="trip-box-frame">
-                <div id="trip-box-new">
+                <div id="trip-box-new" ng-click="">
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     <div class="trip-box-owner"></div>
                     <div class="trip-box-description"></div>
                     <div class="trip-box-menu">
-                        <div class="action-button glyphicon glyphicon-globe"></div>
+                        <a href="#/trip"><button class="action-button glyphicon glyphicon-globe" ng-click="focusTrip(trip)"></button></a>
                         <div class="action-button glyphicon glyphicon-camera"></div>
                         <div class="action-button glyphicon glyphicon-eye-open"></div>
                         <div class="action-button glyphicon glyphicon-pencil"></div>
