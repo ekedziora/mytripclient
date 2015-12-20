@@ -116,6 +116,4 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
                 }
             );
         }
-    }])
-
-;
+    }]);

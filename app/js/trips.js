@@ -17,6 +17,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 function (res) {
                     //res mocked for now
                     res = mockedTripsResponse;
+                    $scope.preview=res.slice(0, 3);
                     $scope.trips = res;
                     $scope.photo = $filter('filter')(mockedPhotos, {
                         tripId: res[0].Id,
