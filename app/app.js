@@ -23,8 +23,8 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
     return {
       'request': function (config) {
         config.headers = config.headers || {};
-        if ($localStorage.token) {
-          config.headers.Authorization = 'Bearer ' + $localStorage.token;
+        if ($localStorage.user && $localStorage.user.token) {
+          config.headers.Authorization = 'Bearer ' + $localStorage.user.token;
         }
         return config;
       },
@@ -43,22 +43,27 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
   var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
 
   return {
-    signin: function(data, success, error) {
+    signIn: function(data, success, error) {
       $http.post(baseUrl + 'auth/token', $.param(data), {
         headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
       }).success(success).error(error)
-    },
-    register: function(data, success, error) {
-      $http.post(baseUrl + 'account/register', data).success(success).error(error)
     },
     signUp: function(data, success, error) {
       $http.post(baseUrl + 'Account/Register', data).success(success).error(error)
     },
     logout: function(success) {
-      delete $localStorage.token;
+      delete $localStorage.user;
       success();
     }
   };
+}])
+
+.controller('IdentityController', ['$scope', '$localStorage', function($scope, $localStorage) {
+  if ($localStorage.user) {
+    if ($localStorage.user.username) {
+      $scope.username = $localStorage.user.username;
+    }
+  }
 }])
 
 .controller('SignInController', ['$scope', 'repository', '$localStorage','$location', function($scope, repository, $localStorage, $location) {
@@ -70,11 +75,15 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version'])
     };
 
     // czyszczenie tymczasowo bo na serwerze leci wyjątek prawdopodobnie jak interceptor dołączy token do tego requestu
-    delete $localStorage.token;
+    delete $localStorage.user;
 
-    repository.signin(formData,
+    repository.signIn(formData,
       function(res) {
-        $localStorage.token = res.access_token;
+        var user = {
+          username: $scope.username,
+          token: res.access_token
+        };
+        $localStorage.user = user;
         $location.path('/trips');
       },
       function(res) {
