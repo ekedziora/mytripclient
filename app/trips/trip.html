@@ -1,0 +1,42 @@
+<div class="container" ng-controller="TripsController">
+    <div class="col-md-9">
+        <h3>Welcome, you are now signed in!</h3>
+        <div class="img-rounded">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id"/>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h2>Trip</h2>
+        <div class="list-group">
+
+            <!-- Pictures -->
+            <a href="" class="list-group-item active" ng-click="listPictures()">
+                <h4 class="list-group-item-heading">Pictures</h4>
+                <!--<p class="list-group-item-text">tekst</p>-->
+            </a>
+            <div class="list-group" ng-show="pictures">
+                <a ng-repeat="pic in pictures" href="#" class="list-group-item inner-element">{{pic.name}}</a>
+            </div>
+
+            <!-- Videos -->
+            <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Videos</h4>
+            </a>
+
+            <!-- Waypoints -->
+            <a href="" class="list-group-item" ng-click="listWaypoints()">
+                <h4 class="list-group-item-heading">Waypoints</h4>
+            </a>
+            <div class="list-group" ng-show="waypoints">
+                <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">{{waypoint.name}}</a>
+            </div>
+            <p>To jest oczywiscie w celach testowych</p>
+            <button ng-click="getTrips()">get trips</button>
+            <ul ng-show="trips">
+                <li ng-repeat="trip in trips">Trip {{trip['Id']}}, date: {{trip['Date']}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

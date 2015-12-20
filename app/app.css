@@ -33,3 +33,12 @@
   max-height: 50%;
   max-width: 50%;
 }
+
+.angular-google-map-container {
+  height: 400px;
+}
+
+a.inner-element {
+  list-style: disc inside;
+  display: list-item;
+}
