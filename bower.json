@@ -13,8 +13,8 @@
     "html5-boilerplate": "~5.2.0",
     "angular-bootstrap": "0.14.3",
     "bootstrap": "~3.3.6",
-    "ngStorage": "https://github.com/gsklee/ngStorage",
     "lodash": "3.10.1",
-    "angular-google-maps": "2.2.1"
+    "angular-google-maps": "2.2.1",
+    "ngstorage": "~0.3.10"
   }
 }

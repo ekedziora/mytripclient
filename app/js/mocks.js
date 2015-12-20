@@ -158,8 +158,8 @@ mockedPhotos = [
     {
         id: 1,
         status: "Formatted",
-        thumbnailUrl: "http://static5.artspan.com/member/painterfish2/125/262510.jpg",
-        bigThumbnailUrl: "http://static5.artspan.com/member/painterfish2/125/262510.jpg",//added
+        thumbnailUrl: "http://static5.artspan.com/member/painterfish2/125/262510.jpg",//ta z listy fot przy wycieczce
+        bigThumbnailUrl: "http://static5.artspan.com/member/painterfish2/125/262510.jpg",//added - ta z widoku trips, moze nie potrzebnie
         defaultBigThumbnail: true,//added
         url: "https://lh3.ggpht.com/684ypp5HcslSrFwwa4giJ9IrtTdwUmDTyaqKJJon_l2hJUwkac13_m8FHRamOqj6bzU=h310",
         tripId: 1

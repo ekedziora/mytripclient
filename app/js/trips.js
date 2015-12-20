@@ -11,40 +11,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', 'repository',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, repository) {
-
-            /*repository.getTrips(
-                function(res) {
-                    $scope.trips = res;
-                },
-                function(res) {
-                    console.log(res);
-                }
-            );*/
-
-            //todo to throw
-            //$scope.getTrips = function () {
-            //    tripsService.getTrips(
-            //        function (res) {
-            //            //res mocked for now
-            //            res = mockedTripsResponse;
-            //            $scope.preview=res;
-            //            $scope.trips = res;
-            //        },
-            //        function (res) {
-            //            console.log(res);
-            //        }
-            //    )
-            //};
-
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService) {
             tripsService.getTrips(
                 function (res) {
                     //res mocked for now
                     res = mockedTripsResponse;
-                    $scope.preview = res.slice(0, 3);
                     $scope.trips = res;
-                    $scope.photo = $filter('filter')(mockedPhotos, {tripId: res[0].Id, defaultBigThumbnail: true}, true);
+                    $scope.photo = $filter('filter')(mockedPhotos, {
+                        tripId: res[0].Id,
+                        defaultBigThumbnail: true
+                    }, true);
                 },
                 function (res) {
                     console.log(res);
@@ -64,10 +41,14 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 if ($scope.waypoints)
                     $scope.waypoints = null;
                 else
-                    $scope.waypoints = mockedWaypoints;
-            }
+                    $scope.waypoints = $scope.map.markers;
+            };
 
-            $scope.markers = [{"id": 1, "latitude": 46, "longitude": -79, "showWindow": false, "show": false}]
+            $scope.trackings = [{
+                id: 1,
+                geotracks: []
+            }];
+
             uiGmapGoogleMapApi.then(function (maps) {
                 $scope.map =
                 {
@@ -75,7 +56,27 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         latitude: 52,
                         longitude: 20
                     },
-                    zoom: 6
+                    zoom: 6,
+                    markers: [],
+                    events: {
+                        click: function (map, eventName, originalEventArgs) {
+                            var e = originalEventArgs[0];
+                            var lat = e.latLng.lat(), lon = e.latLng.lng();
+                            var marker = {
+                                id: Date.now(),
+                                coords: {
+                                    latitude: lat,
+                                    longitude: lon
+                                }
+                            };
+                            $scope.map.markers.push(marker);
+                            if($scope.map.markers.length > 0) {
+                                $scope.trackings[0].geotracks.push({latitude: marker.coords.latitude, longitude: marker.coords.longitude});
+                            }
+                            $scope.$apply();
+                            console.log($scope.trackings);
+                        }
+                    }
                 };
             });
         }])
@@ -83,7 +84,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
 
         return {
-            //getPreview: function(success, error) {},
             getTrips: function (success, error) {
                 $http.get(baseUrl + 'trip').success(success).error(error)
             },
