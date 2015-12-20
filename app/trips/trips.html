@@ -37,7 +37,7 @@
         <!-- add trip view-->
         <div class="col-sm-3">
             <div class="trip-box-frame">
-                <div id="trip-box-new" ng-click="editTrip()"></div>
+                <div id="trip-box-new" ng-click="openEdit()"></div>
             </div>
         </div>
 
@@ -95,7 +95,7 @@
                     <input type="file" class="file" id="route">
                 </div>
                 <button type="button" class="btn btn-default" ng-click="closeEdit()">Cancel</button>
-                <button type="submit" class="btn btn-default" ng-click="">Save</button>
+                <button type="submit" class="btn btn-default" ng-click="saveEdit()">Save</button>
             </form>
         </div>
     </td>
