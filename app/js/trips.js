@@ -24,23 +24,25 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             );*/
 
             //todo to throw
-            $scope.getTrips = function () {
-                tripsService.getTrips(
-                    function (res) {
-                        //res mocked for now
-                        res = mockedTripsResponse;
-                        $scope.trips = res;
-                    },
-                    function (res) {
-                        console.log(res);
-                    }
-                )
-            };
+            //$scope.getTrips = function () {
+            //    tripsService.getTrips(
+            //        function (res) {
+            //            //res mocked for now
+            //            res = mockedTripsResponse;
+            //            $scope.preview=res;
+            //            $scope.trips = res;
+            //        },
+            //        function (res) {
+            //            console.log(res);
+            //        }
+            //    )
+            //};
 
             tripsService.getTrips(
                 function (res) {
                     //res mocked for now
                     res = mockedTripsResponse;
+                    $scope.preview = res.slice(0, 3);
                     $scope.trips = res;
                     $scope.photo = $filter('filter')(mockedPhotos, {tripId: res[0].Id, defaultBigThumbnail: true}, true);
                 },
@@ -81,6 +83,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
 
         return {
+            //getPreview: function(success, error) {},
             getTrips: function (success, error) {
                 $http.get(baseUrl + 'trip').success(success).error(error)
             },

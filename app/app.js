@@ -116,18 +116,18 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
                 }
             );
         }
-    }])
-
-    .controller('TripssController', ['$scope', 'repository', function($scope, repository) {
-
-        var s = {};
-
-        repository.getTrips(
-            function(res) {
-                $scope.trips = res;
-            },
-            function(res) {
-                console.log(res);
-            }
-        );
     }]);
+
+    //.controller('TripssController', ['$scope', 'repository', function($scope, repository) {
+    //
+    //    var s = {};
+    //
+    //    repository.getTrips(
+    //        function(res) {
+    //            $scope.trips = res;
+    //        },
+    //        function(res) {
+    //            console.log(res);
+    //        }
+    //    );
+    //}]);
