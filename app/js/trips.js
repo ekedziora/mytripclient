@@ -121,9 +121,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     //    },
                     //    function (res) {
                     //        console.log(res);
+                    //        $scope.requested = false;
                     //    },
                     //    function (res) {
                     //        console.log(res);
+                    //        $scope.requested = false;
                     //    }
                     //);
                 }
