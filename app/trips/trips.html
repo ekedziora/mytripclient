@@ -49,10 +49,14 @@
                         <img ng-src="{{photo[0].bigThumbnailUrl}}"/>
                     </div>
                     <div class="trip-box-name">
-                        {{trip.Id}}
+                        {{trip.Name}}
                     </div>
-                    <div class="trip-box-owner"></div>
-                    <div class="trip-box-description"></div>
+                    <div class="trip-box-owner">
+                        {{trip.Owner}}
+                    </div>
+                    <div class="trip-box-description">
+                        {{trip.Description}}
+                    </div>
                     <div class="trip-box-menu">
                         <a href="#/trip/{{trip.Id}}"><button class="action-button glyphicon glyphicon-road" data-toggle="tooltip" title="Route"></button></a>
                         <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard"></div>

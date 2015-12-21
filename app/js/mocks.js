@@ -3,15 +3,15 @@
  * @type {*[]}
  */
 mockedTripsResponse = [
-    { Id: 1, Name: "Super trasa", Description: "Blaaa blaa taaaka traasaaa..", IsPublic: false },
-    { Id: 2, Name: "Fajna", Description: "dada dada daa..", IsPublic: false },
-    { Id: 3, Name: "Wow", Description: "Bdad dggg saaka traasaaa..", IsPublic: false },
-    { Id: 4, Name: "Drogaaa", Description: "Blffffaf ..", IsPublic: false },
-    { Id: 5, Name: "Nibylandia", Description: "Bfa yyj f gf g gs sdfd fsa..", IsPublic: false },
-    { Id: 6, Name: "Wycieczka szkolna", Description: "Blaaa bladaaaaaaaaaddad dad sd sdas  dassaaa..", IsPublic: false },
-    { Id: 7, Name: "Wyprawa do Mordoru", Description: "Bldddadasddd nnhmccas ccasc csac", IsPublic: false },
-    { Id: 8, Name: "W Azkabanie", Description: "Blaaadsd ddww aasaaa..", IsPublic: false },
-    { Id: 9, Name: "Na koniec œwiata", Description: "Bladda traad saaa..", IsPublic: false }
+    { Id: 1, Name: "Super trasa", Owner: "You", Description: "Blaaa blaa taaaka traasaaa..", IsPublic: false },
+    { Id: 2, Name: "Fajna", Owner: "You", Description: "dada dada daa..", IsPublic: false },
+    { Id: 3, Name: "Wow", Owner: "You", Description: "Bdad dggg saaka traasaaa..", IsPublic: false },
+    { Id: 4, Name: "Drogaaa", Owner: "You", Description: "Blffffaf ..", IsPublic: false },
+    { Id: 5, Name: "Nibylandia", Owner: "You", Description: "Bfa yyj f gf g gs sdfd fsa..", IsPublic: false },
+    { Id: 6, Name: "Wycieczka szkolna", Owner: "You", Description: "Blaaa bladaaaaaaaaaddad dad sd sdas  dassaaa..", IsPublic: false },
+    { Id: 7, Name: "Wyprawa do Mordoru", Owner: "You", Description: "Bldddadasddd nnhmccas ccasc csac", IsPublic: false },
+    { Id: 8, Name: "W Azkabanie", Owner: "You", Description: "Blaaadsd ddww aasaaa..", IsPublic: false },
+    { Id: 9, Name: "Na koniec œwiata", Owner: "You", Description: "Bladda traad saaa..", IsPublic: false }
 ];
 
 /**
