@@ -3,9 +3,9 @@
  * @type {*[]}
  */
 mockedTripsResponse = [
-    { Id: 1, Name: "Super trasa", Owner: "You", Description: "Blaaa blaa taaaka traasaaa..", IsPublic: false },
+    { Id: 1, Name: "Super trasa", Owner: "You", Description: "Blaaa blaa taaaka traasaaa.. veryyyyy long description.. someone must have been boreeeed.. ammaaagaaad", IsPublic: false },
     { Id: 2, Name: "Fajna", Owner: "You", Description: "dada dada daa..", IsPublic: false },
-    { Id: 3, Name: "Wow", Owner: "You", Description: "Bdad dggg saaka traasaaa..", IsPublic: false },
+    { Id: 3, Name: "Wow", Owner: "You", Description: "Bdad dggg saaka traasaaa.. them again.. typing so much.. just to see the text fade out gg..", IsPublic: false },
     { Id: 4, Name: "Drogaaa", Owner: "You", Description: "Blffffaf ..", IsPublic: false },
     { Id: 5, Name: "Nibylandia", Owner: "You", Description: "Bfa yyj f gf g gs sdfd fsa..", IsPublic: false },
     { Id: 6, Name: "Wycieczka szkolna", Owner: "You", Description: "Blaaa bladaaaaaaaaaddad dad sd sdas  dassaaa..", IsPublic: false },
