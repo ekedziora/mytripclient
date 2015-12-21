@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'ngFileUpload'])
+angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips'])
     .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
 
         $routeProvider
@@ -48,7 +48,6 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'ngFi
     }])
 
     .service('IdentityService', ['$http', '$localStorage', function($http, $localStorage){
-        //var baseUrl = "http://mytrip244611.azurewebsites.net/api/";
         var baseUrl = "http://mytrippwapi.azurewebsites.net/api/";
 
         return {
