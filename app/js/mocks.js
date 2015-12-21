@@ -29,12 +29,20 @@ mockedTripResponse =
             {
                 id: 1,
                 latitude: 52.5,
-                longitude: 22
+                longitude: 22,
+                city: "Zbuczyn"
             },
             {
                 id: 2,
                 latitude: 52.7,
-                longitude: 22.7
+                longitude: 22.7,
+                city: "Chromna"
+            },
+            {
+                id: 3,
+                latitude: 52.8,
+                longitude: 22.2,
+                city: "Inowrocław"
             }
         ]
     }
