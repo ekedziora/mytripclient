@@ -15,6 +15,7 @@
     "bootstrap": "~3.3.6",
     "lodash": "3.10.1",
     "angular-google-maps": "2.2.1",
-    "ngstorage": "~0.3.10"
+    "ngstorage": "~0.3.10",
+    "ng-file-upload": "~10.1.11"
   }
 }

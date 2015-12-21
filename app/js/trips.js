@@ -29,6 +29,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 tripsService.getTrips(
                     function (res) {
                         //res mocked for now
+                        console.log(res);
                         res = mockedTripsResponse;
                         $scope.preview = res.slice(0, 3);
                         $scope.trips = res;
@@ -120,8 +121,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 };
             });
         }])
-    .controller('EditTripController', ['$scope', '$filter', 'TripsService',
-        function ($scope, $filter, tripsService) {
+    .controller('EditTripController', ['$scope', '$filter', 'TripsService', 'Upload',
+        function ($scope, $filter, tripsService, Upload) {
+
+            $scope.setFile = function(file) {
+                $scope.tripFile=file.files[0];
+            };
 
             $scope.openEdit = function (id) {
                 $scope.editedTrip = id;
@@ -143,26 +148,48 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.requested = false;
             };
 
-            $scope.saveEdit = function () {
+            $scope.saveEdit = function (file) {
                 if ($scope.editedTrip == null) {
                     // create new trip
-                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
+                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc + " " + file.name);
                     //post request
                     //tripsService.insertTripRoute(
                     //    {
                     //        name: $scope.tripName,
                     //        desc: $scope.tripDesc,
-                    //        file: $scope.tripFile
+                    //        file: file
                     //    },
                     //    function (res) {
+                    //        console.log("ok");
                     //        console.log(res);
                     //        $scope.requested = false;
+                    //        //window.location = "#/trips";
                     //    },
                     //    function (res) {
+                    //        console.log("fail");
                     //        console.log(res);
                     //        $scope.requested = false;
+                    //        //window.location = "#/trips";
                     //    }
                     //);
+
+                    file.upload = Upload.upload({
+                        url: 'http://mytrippwapi.azurewebsites.net/api/Route/create?name=plik&description=test',
+                        data: {file: file}
+                    });
+
+                    file.upload.then(function (response) {
+                        console.log("ok");
+                        console.log(response);
+                        $scope.requested = false;
+                        window.location = "#/trips";
+                    }, function (response) {
+                        console.log("fail");
+                        console.log(response);
+                    }, function (evt) {
+                        // Math.min is to fix IE which reports 200% sometimes
+                        console.log(file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total)));
+                    });
                 }
                 else {
                     // update trip
@@ -179,18 +206,32 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         return {
             getTrips: function (success, error) {
-                $http.get(baseUrl + 'Trip?limit=3&offset=0').then(success, error);
+                $http.get(baseUrl + 'Trip?limit=10&offset=0').then(success, error);
             },
             getTrip: function (tripId, success, error) {
                 $http.get(baseUrl + 'Trip/getTrip?tripId=' + tripId, {
                     headers: {'Content-Type': 'application/json; charset=utf-8'}
-                }).success(success).error(error)
+                }).success(success, error);
             },
             insertTripRoute: function (data, success, error) {
-                $http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, 'test',
-                    {
-                        headers: {'Content-Type': 'undefined'}
-                    }).then(success, error);
+                console.log(data.file);
+
+                //var fd = new FormData();
+                //fd.append('file', data.file);
+                //
+                //$http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, fd,
+                //    { headers: {'Content-Type': 'undefined'} }).then(success, error);
+
+                $http({
+                    method: 'POST',
+                    url: baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc,
+                    data:
+                    data.file,
+                    //{file: data.file},
+                    headers: {'Content-type':
+                        //'undefined'}
+                        'multipart/form-data'}
+                }).then(success, error);
             }
         };
     }]);

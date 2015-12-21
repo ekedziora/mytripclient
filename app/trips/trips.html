@@ -84,7 +84,7 @@
     <td align="center">
         <div style="background-color:#e6e6e6;width:100%;max-width:320px;min-width:256px;padding:16px;text-align:left;">
             <h3>Edit trip</h3>
-            <form role="form" id="editForm" method="post" ng-submit="saveEdit()">
+            <form role="form" id="editForm" method="post" data-ng-submit="saveEdit(tripFile)">
                 <div id="trip-edit-thumbnail"></div>
                 <div class="form-group">
                     <label for="tripname">Name:</label>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="form-group">
                     <label for="triproute">Route:</label>
-                    <input type="file" class="file" id="triproute" required ng-model="tripFile" accept=".txt">
+                    <input type="file" class="file" id="triproute" required ng-model="tripFile" accept=".txt" onchange="angular.element(this).scope().setFile(this)">
                 </div>
                 <button type="button" class="btn btn-default" ng-click="closeEdit()">Cancel</button>
                 <button type="submit" class="btn btn-default">Save</button>
