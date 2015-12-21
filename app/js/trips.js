@@ -16,22 +16,31 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             $scope.focusedTrip = $routeParams.id;
 
-            tripsService.getTrips(
+            $scope.focusedTrip ? tripsService.getTrip($scope.focusedTrip,
                 function (res) {
-                    console.log(res);
-                    //res mocked for now
-                    res = mockedTripsResponse;
-                    $scope.preview=res.slice(0, 3);
-                    $scope.trips = res;
-                    $scope.photo = $filter('filter')(mockedPhotos, {
-                        tripId: res[0].Id,
-                        defaultBigThumbnail: true
-                    }, true);
+                    $scope.trip = res;
                 },
                 function (res) {
+                    $scope.trip = res;
                     console.log(res);
                 }
-            );
+            )
+                :
+                tripsService.getTrips(
+                    function (res) {
+                        //res mocked for now
+                        res = mockedTripsResponse;
+                        $scope.preview = res.slice(0, 3);
+                        $scope.trips = res;
+                        $scope.photo = $filter('filter')(mockedPhotos, {
+                            tripId: res[0].Id,
+                            defaultBigThumbnail: true
+                        }, true);
+                    },
+                    function (res) {
+                        console.log(res);
+                    }
+                );
 
             $scope.photos = mockedPhotos;
 
@@ -54,6 +63,27 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 geotracks: []
             }];
 
+            var markers = [];
+            //mapping trips from response to map markers
+            angular.forEach(mockedTripResponse.route.points, function (val) {
+                this.push({
+                    id: Date.now(),//todo
+                    coords: {
+                        latitude: val.latitude,
+                        longitude: val.longitude,
+                        city: val.city
+                    }
+                });
+                //setting trackings
+                $scope.trackings[0].geotracks.push(
+                    {
+                        latitude: val.latitude,
+                        longitude: val.longitude
+                    }
+                )
+
+            }, markers);
+
             uiGmapGoogleMapApi.then(function (maps) {
                 $scope.map =
                 {
@@ -62,36 +92,41 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         longitude: 20
                     },
                     zoom: 6,
-                    markers: [],
-                    events: {
-                        click: function (map, eventName, originalEventArgs) {
-                            var e = originalEventArgs[0];
-                            var lat = e.latLng.lat(), lon = e.latLng.lng();
-                            var marker = {
-                                id: Date.now(),
-                                coords: {
-                                    latitude: lat,
-                                    longitude: lon
-                                }
-                            };
-                            $scope.map.markers.push(marker);
-                            if($scope.map.markers.length > 0) {
-                                $scope.trackings[0].geotracks.push({latitude: marker.coords.latitude, longitude: marker.coords.longitude});
-                            }
-                            $scope.$apply();
-                            console.log($scope.trackings);
-                        }
-                    }
+                    markers: markers
+                    /*events: {
+                     click: function (map, eventName, originalEventArgs) {
+                     var e = originalEventArgs[0];
+                     var lat = e.latLng.lat(), lon = e.latLng.lng();
+                     var marker = {
+                     id: Date.now(),
+                     coords: {
+                     latitude: lat,
+                     longitude: lon
+                     }
+                     };
+                     $scope.map.markers.push(marker);
+                     if($scope.map.markers.length > 0) {
+                     $scope.trackings[0].geotracks.push(
+                     {
+                     latitude: marker.coords.latitude,
+                     longitude: marker.coords.longitude
+                     }
+                     );
+                     }
+                     $scope.$apply();
+                     console.log($scope.trackings);
+                     }
+                     }*/
                 };
             });
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
         function ($scope, $filter, tripsService) {
 
-            $scope.openEdit = function(id) {
+            $scope.openEdit = function (id) {
                 $scope.editedTrip = id;
 
-                if(id != null) {
+                if (id != null) {
                     // load data
                 }
                 else {
@@ -103,13 +138,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.requested = true;
             };
 
-            $scope.closeEdit = function() {
+            $scope.closeEdit = function () {
                 $scope.editedTrip = null;
                 $scope.requested = false;
             };
 
-            $scope.saveEdit = function() {
-                if($scope.editedTrip == null) {
+            $scope.saveEdit = function () {
+                if ($scope.editedTrip == null) {
                     // create new trip
                     console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
                     //post request
@@ -146,11 +181,16 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             getTrips: function (success, error) {
                 $http.get(baseUrl + 'Trip?limit=3&offset=0').then(success, error);
             },
-            
+            getTrip: function (tripId, success, error) {
+                $http.get(baseUrl + 'Trip/getTrip?tripId=' + tripId, {
+                    headers: {'Content-Type': 'application/json; charset=utf-8'}
+                }).success(success).error(error)
+            },
             insertTripRoute: function (data, success, error) {
                 $http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, 'test',
-                    {headers: {'Content-Type': 'undefined'}
-                }).then(success, error);
+                    {
+                        headers: {'Content-Type': 'undefined'}
+                    }).then(success, error);
             }
         };
     }]);

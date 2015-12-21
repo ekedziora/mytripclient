@@ -7,7 +7,7 @@
                 <ui-gmap-polylines models="trackings" path="'geotracks'" static="true"></ui-gmap-polylines>
             </ui-gmap-google-map>
         </div>
-        <div>
+        <!--<div>
             <fieldset class="form-group">
                 <br>
                 <label for="exampleInputEmail1">Enter a name for the trip:</label>
@@ -15,7 +15,7 @@
                 <small class="text-muted">The trip will be saved for later use</small>
             </fieldset>
         <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save trip route</button>
-        </div>
+        </div>-->
     </div>
     <div class="col-md-3">
         <h2>Trip {{focusedTrip}}</h2>
@@ -42,7 +42,7 @@
             </a>
             <div class="list-group" ng-show="waypoints">
                 <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
-                    <div>Waypoint id: {{waypoint.id}}</div>
+                    <div>City: {{waypoint.coords.city}}</div>
                     <div>Lat: {{waypoint.coords.latitude}}</div>
                     <div>Lon: {{waypoint.coords.longitude}}</div>
                 </a>
