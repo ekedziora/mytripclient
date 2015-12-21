@@ -30,11 +30,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     function (res) {
                         //res mocked for now
                         console.log(res);
-                        res = mockedTripsResponse;
-                        $scope.preview = res.slice(0, 3);
+                        //res = mockedTripsResponse;
+                        $scope.preview = res.data.slice(0, 100);
                         $scope.trips = res;
                         $scope.photo = $filter('filter')(mockedPhotos, {
-                            tripId: res[0].Id,
+                            tripId: 1,//res.data[0].Id,
                             defaultBigThumbnail: true
                         }, true);
                     },
@@ -185,7 +185,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         return {
             getTrips: function (success, error) {
-                $http.get(baseUrl + 'Trip?limit=3&offset=0').then(success, error);
+                $http.get(baseUrl + 'Trip?limit=100&offset=0').then(success, error);
             },
             getTrip: function (tripId, success, error) {
                 $http.get(baseUrl + 'Trip/getTrip?tripId=' + tripId, {
