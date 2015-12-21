@@ -3,106 +3,15 @@
  * @type {*[]}
  */
 mockedTripsResponse = [
-    {
-        Id: 1,
-        Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: false,
-        route: {
-            id: 1,
-            points: [
-                {
-                    id: 1,
-                    latitude: 52.5,
-                    longitude: 22
-                },
-                {
-                    id: 2,
-                    latitude: 52.7,
-                    longitude: 22.7
-                }
-            ]
-        }
-    },
-    {
-        Id: 2,
-        Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: false,
-        route: {
-            id: 1,
-            points: [
-                {
-                    id: 1,
-                    latitude: 52.5,
-                    longitude: 22
-                },
-                {
-                    id: 2,
-                    latitude: 52.7,
-                    longitude: 22.7
-                }
-            ]
-        }
-    },
-    {
-        Id: 3,
-        Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: false,
-        route: {
-            id: 1,
-            points: [
-                {
-                    id: 1,
-                    latitude: 52.5,
-                    longitude: 22
-                },
-                {
-                    id: 2,
-                    latitude: 52.7,
-                    longitude: 22.7
-                }
-            ]
-        }
-    },
-    {
-        Id: 4,
-        Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: false,
-        route: {
-            id: 1,
-            points: [
-                {
-                    id: 1,
-                    latitude: 52.5,
-                    longitude: 22
-                },
-                {
-                    id: 2,
-                    latitude: 52.7,
-                    longitude: 22.7
-                }
-            ]
-        }
-    },
-    {
-        Id: 5,
-        Date: "2015-12-20T11:52:07.9001799+00:00",
-        IsPublic: true,
-        route: {
-            id: 1,
-            points: [
-                {
-                    id: 1,
-                    latitude: 52.5,
-                    longitude: 22
-                },
-                {
-                    id: 2,
-                    latitude: 52.7,
-                    longitude: 22.7
-                }
-            ]
-        }
-    }
+    { Id: 1, Name: "Super trasa", Description: "Blaaa blaa taaaka traasaaa..", IsPublic: false },
+    { Id: 2, Name: "Fajna", Description: "dada dada daa..", IsPublic: false },
+    { Id: 3, Name: "Wow", Description: "Bdad dggg saaka traasaaa..", IsPublic: false },
+    { Id: 4, Name: "Drogaaa", Description: "Blffffaf ..", IsPublic: false },
+    { Id: 5, Name: "Nibylandia", Description: "Bfa yyj f gf g gs sdfd fsa..", IsPublic: false },
+    { Id: 6, Name: "Wycieczka szkolna", Description: "Blaaa bladaaaaaaaaaddad dad sd sdas  dassaaa..", IsPublic: false },
+    { Id: 7, Name: "Wyprawa do Mordoru", Description: "Bldddadasddd nnhmccas ccasc csac", IsPublic: false },
+    { Id: 8, Name: "W Azkabanie", Description: "Blaaadsd ddww aasaaa..", IsPublic: false },
+    { Id: 9, Name: "Na koniec œwiata", Description: "Bladda traad saaa..", IsPublic: false }
 ];
 
 /**
