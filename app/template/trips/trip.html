@@ -40,7 +40,7 @@
             <!-- Waypoints -->
             <a href="" class="list-group-item" ng-click="listWaypoints()">
                 <span class = "badge">{{map.markers.length}}</span>
-                <h4 class="list-group-item-heading">Waypoints </h4>
+                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged" ng-click="" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></h4>
             </a>
             <div class="list-group" ng-show="waypoints">
                 <div ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">

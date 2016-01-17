@@ -103,14 +103,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             $scope.moveWaypointUp = function(id) {
                 tripsService.swapArrayElements($scope.waypoints, id, id-1);
+                $scope.waypointsChanged = true;
             };
 
             $scope.moveWaypointDown = function(id) {
                 tripsService.swapArrayElements($scope.waypoints, id, id+1);
+                $scope.waypointsChanged = true;
             };
 
             $scope.removeWaypoint = function(id) {
                 $scope.waypoints.splice(id, 1);
+                $scope.waypointsChanged = true;
             };
 
             var markers = [];
