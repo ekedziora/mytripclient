@@ -20,7 +20,6 @@
         </div>
 
         <div class="col-sm-3" ng-repeat="trip in preview | filter:{IsPublic:false}">
-
             <div class="trip-box-frame">
                 <div class="trip-box-loaded">
                     <div class="trip-box-thumbnail">
@@ -43,12 +42,38 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- Expand button -->
+        <div>
+            <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed" ng-click="moreTrips()"></span>
+        </div>
+
+        <div class="col-sm-3" ng-repeat="trip in trips | filter:{IsPublic:false}">
+            <div class="trip-box-frame">
+                <div class="trip-box-loaded">
+                    <div class="trip-box-thumbnail">
+                        <img ng-src="{{photo[0].bigThumbnailUrl}}"/>
+                    </div>
+                    <div class="trip-box-name">
+                        {{trip.Name}}
+                    </div>
+                    <div class="trip-box-owner">
+                        {{trip.Owner}}
+                    </div>
+                    <div class="trip-box-description">
+                        {{trip.Description}}
+                    </div>
+                    <div class="trip-box-menu">
+                        <a href="#/trip/{{trip.Id}}"><button class="action-button glyphicon glyphicon-road" data-toggle="tooltip" title="Route"></button></a>
+                        <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard"></div>
+                        <div class="action-button glyphicon glyphicon-link" data-toggle="tooltip" title="Share"></div>
+                        <div class="action-button glyphicon glyphicon-pencil" data-toggle="tooltip" title="Edit"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Expand button -->
-    <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed"></span>
 </div>
 
 <!-- Footer -->

@@ -15,6 +15,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams) {
 
             var tripsPreviewSize = 3;
+            var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
 
@@ -47,6 +48,24 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     }
                 );
             }
+
+            $scope.moreTrips = function() {
+                var offset = tripsPreviewSize + ($scope.trips ? $scope.trips.length : 0);
+
+                tripsService.getTrips({offset: offset, limit: tripsLoadingSize},
+                    function(res) {
+                        if(res.data.size < tripsLoadingSize) {
+                            // Loaded last [res.data.size] trips
+                            // Hide 'load more' button
+                        }
+
+                        $scope.trips = $scope.trips ? $scope.trips.concat(res.data) : res.data;
+                    },
+                    function(res) {
+                        console.log(res);
+                    }
+                );
+            };
 
             $scope.photos = mockedPhotos;
 
