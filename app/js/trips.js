@@ -49,9 +49,22 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 );
             }
 
+            $scope.toggleTripsGallery = function() {
+                if($scope.galleryVisible) {
+                    // Reset previously loaded trips
+                    $scope.trips = [];
+                    $scope.galleryVisible = false;
+                }
+                else {
+                    // Request [tripsLoadingSize] trips
+                    $scope.moreTrips();
+                    $scope.galleryVisible = true;
+                }
+            };
+
             $scope.moreTrips = function() {
                 var offset = tripsPreviewSize + ($scope.trips ? $scope.trips.length : 0);
-
+                console.log('offset: '+offset);
                 tripsService.getTrips({offset: offset, limit: tripsLoadingSize},
                     function(res) {
                         if(res.data.size < tripsLoadingSize) {
