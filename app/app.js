@@ -7,23 +7,23 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'iden
         $routeProvider
             .otherwise({redirectTo: '/trips'})
             .when('/signIn', {
-                templateUrl: 'signIn/signIn.html',
+                templateUrl: 'template/identity/signIn.html',
                 controller: 'SignInController'
             })
             .when('/signUp', {
-                templateUrl: 'signUp/signUp.html',
+                templateUrl: 'template/identity/signUp.html',
                 controller: 'SignUpController'
             })
             .when('/trips', {
-                templateUrl: 'trips/trips.html',
+                templateUrl: 'template/trips/trips.html',
                 controller: 'TripsController'
             })
             .when('/trip/:id', {
-                templateUrl: 'trips/trip.html',
+                templateUrl: 'template/trips/trip.html',
                 controller: 'TripsController'
             })
             .when('/trip', {
-                templateUrl: 'trips/trip.html',
+                templateUrl: 'template/trips/trip.html',
                 controller: 'TripsController'
             });
 
