@@ -94,30 +94,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     },
                     zoom: 6,
                     markers: markers
-                    /*events: {
-                     click: function (map, eventName, originalEventArgs) {
-                     var e = originalEventArgs[0];
-                     var lat = e.latLng.lat(), lon = e.latLng.lng();
-                     var marker = {
-                     id: Date.now(),
-                     coords: {
-                     latitude: lat,
-                     longitude: lon
-                     }
-                     };
-                     $scope.map.markers.push(marker);
-                     if($scope.map.markers.length > 0) {
-                     $scope.trackings[0].geotracks.push(
-                     {
-                     latitude: marker.coords.latitude,
-                     longitude: marker.coords.longitude
-                     }
-                     );
-                     }
-                     $scope.$apply();
-                     console.log($scope.trackings);
-                     }
-                     }*/
                 };
             });
         }])
