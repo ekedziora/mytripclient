@@ -45,7 +45,7 @@
         </div>
 
         <!-- Expand button -->
-        <div>
+        <div style="text-align: center;">
             <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed" ng-click="toggleTripsGallery()"></span>
         </div>
 
@@ -73,6 +73,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Load more button -->
+    <div ng-show="galleryMore" style="text-align: center; margin: 32px 0 16px 0;">
+        <span style="border: 2px solid #373737; padding:8px; border-radius: 4px; cursor: pointer;">Load more</span>
     </div>
 </div>
 

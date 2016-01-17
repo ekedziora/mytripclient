@@ -67,10 +67,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 console.log('offset: '+offset);
                 tripsService.getTrips({offset: offset, limit: tripsLoadingSize},
                     function(res) {
-                        if(res.data.size < tripsLoadingSize) {
-                            // Loaded last [res.data.size] trips
-                            // Hide 'load more' button
-                        }
+
+                        // If loaded last [res.data.size] trips,
+                        // hide 'load more' button
+                        $scope.galleryMore = (res.data.size < tripsLoadingSize);
 
                         $scope.trips = $scope.trips ? $scope.trips.concat(res.data) : res.data;
                     },
