@@ -30,8 +30,11 @@ angular.module('identity', [])
         };
     }])
 
-    .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', function($scope, IdentityService, $localStorage, $location) {
+    .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', 'DataShare', function($scope, IdentityService, $localStorage, $location, dataShare) {
+        $scope.signedUpMessage = dataShare.message;
         $scope.signIn = function () {
+            dataShare.message = "";
+
             var formData = {
                 grant_type: "password",
                 username: $scope.username,
@@ -57,7 +60,7 @@ angular.module('identity', [])
         }
     }])
 
-    .controller('SignUpController', ['$scope', '$location', 'IdentityService', function($scope, $location, IdentityService) {
+    .controller('SignUpController', ['$scope', '$location', 'IdentityService', 'DataShare', function($scope, $location, IdentityService, dataShare) {
         $scope.signUp = function () {
             var formData = {
                 username: $scope.username,
@@ -66,6 +69,7 @@ angular.module('identity', [])
 
             IdentityService.signUp(formData,
                 function(res) {
+                    dataShare.message = "You've successfully signed up, now you can sign in.";
                     $location.url('/signIn')
                 },
                 function(res) {
@@ -73,4 +77,8 @@ angular.module('identity', [])
                 }
             );
         }
-    }]);
+    }])
+
+    .factory('DataShare', function(){
+        return { message: '' };
+    });
