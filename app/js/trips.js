@@ -14,25 +14,29 @@ angular.module('trips', ['uiGmapgoogle-maps'])
     .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams',
         function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams) {
 
+            var tripsPreviewSize = 3;
+
             $scope.focusedTrip = $routeParams.id;
 
-            $scope.focusedTrip ? tripsService.getTrip($scope.focusedTrip,
-                function (res) {
-                    $scope.trip = res;
-                },
-                function (res) {
-                    $scope.trip = res;
-                    console.log(res);
-                }
-            )
-                :
-                tripsService.getTrips(
+            if($scope.focusedTrip) {
+                tripsService.getTrip($scope.focusedTrip,
+                    function (res) {
+                        $scope.trip = res;
+                    },
+                    function (res) {
+                        $scope.trip = res;
+                        console.log(res);
+                    }
+                )
+            }
+            else {
+                tripsService.getTrips({offset: 0, limit: tripsPreviewSize},
                     function (res) {
                         //res mocked for now
                         console.log(res);
                         //res = mockedTripsResponse;
-                        $scope.preview = res.data.slice(0, 100);
-                        $scope.trips = res;
+                        $scope.preview = res.data;
+                        $scope.trips = [];
                         $scope.photo = $filter('filter')(mockedPhotos, {
                             tripId: 1,//res.data[0].Id,
                             defaultBigThumbnail: true
@@ -42,6 +46,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         console.log(res);
                     }
                 );
+            }
 
             $scope.photos = mockedPhotos;
 
@@ -160,8 +165,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
         var baseUrl = "http://mytrippwapi.azurewebsites.net/api/";
 
         return {
-            getTrips: function (success, error) {
-                $http.get(baseUrl + 'Trip?limit=100&offset=0').then(success, error);
+            getTrips: function (data, success, error) {
+                $http.get(baseUrl
+                    + 'Trip?offset='
+                    + (data.offset ? data.offset : 0)
+                    + '&limit='
+                    + (data.limit ? data.limit : 0)).then(success, error);
             },
             getTrip: function (tripId, success, error) {
                 $http.get(baseUrl + 'Trip/getTrip?tripId=' + tripId, {
