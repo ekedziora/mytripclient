@@ -101,6 +101,18 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 geotracks: []
             }];
 
+            $scope.moveWaypointUp = function(id) {
+                tripsService.swapArrayElements($scope.waypoints, id, id-1);
+            };
+
+            $scope.moveWaypointDown = function(id) {
+                tripsService.swapArrayElements($scope.waypoints, id, id+1);
+            };
+
+            $scope.removeWaypoint = function(id) {
+                $scope.waypoints.splice(id, 1);
+            };
+
             var markers = [];
             //mapping trips from response to map markers
             angular.forEach(mockedTripResponse.route.points, function (val) {
@@ -217,6 +229,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
                 $http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, fd,
                     { headers: {'Content-Type': undefined} }).then(success, error);
+            },//todo
+            swapArrayElements: function(arr, indexA, indexB) {
+                var temp = arr[indexA];
+                arr[indexA] = arr[indexB];
+                arr[indexB] = temp;
             }
         };
     }]);

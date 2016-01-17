@@ -43,11 +43,14 @@
                 <h4 class="list-group-item-heading">Waypoints </h4>
             </a>
             <div class="list-group" ng-show="waypoints">
-                <a ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
+                <div ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
+                    <a href="" ng-click="removeWaypoint($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-remove"></span></a>
+                    <a ng-hide="$index == waypoints.length-1" href="" ng-click="moveWaypointDown($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-download"></span></a>
+                    <a ng-hide="$index == 0" href="" ng-click="moveWaypointUp($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-upload"></span></a>
                     <div>City: {{waypoint.coords.city}}</div>
                     <div>Lat: {{waypoint.coords.latitude}}</div>
                     <div>Lon: {{waypoint.coords.longitude}}</div>
-                </a>
+                </div>
             </div>
         </div>
     </div>
