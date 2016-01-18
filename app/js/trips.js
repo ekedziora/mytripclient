@@ -49,27 +49,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 );
             };
 
-            if($scope.focusedTrip) {
-                tripsService.getTrip($scope.focusedTrip,
-                    function (res) {
-                        $scope.trip = res;
-                    },
-                    function (res) {
-                        $scope.trip = res;
-                        console.log(res);
-                    }
-                )
-            }
-            else {
-                $scope.requestTrips();
-            }
-
             $scope.public = false;
             
             $scope.togglePublic = function(status) {
                 if($scope.public != status) {
                     $scope.public = status;
-                    $scope.requestTrips();
                 }
             };
 
