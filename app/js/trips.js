@@ -241,8 +241,15 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 var fd = new FormData();
                 fd.append('file', data.file);
 
-                $http.post(baseUrl + 'Route/create?name=' + data.name + '&description=' + data.desc, fd,
-                    { headers: {'Content-Type': undefined} }).then(success, error);
+                $http.post(baseUrl
+                    + 'Route/create?name='
+                    + data.name
+                    + '&description='
+                    + data.desc
+                    + '&isPublic='
+                    + data.isPublic ? 'true' : 'false',
+                    fd, { headers: {'Content-Type': undefined} }
+                ).then(success, error);
             },//todo
             swapArrayElements: function(arr, indexA, indexB) {
                 var temp = arr[indexA];
