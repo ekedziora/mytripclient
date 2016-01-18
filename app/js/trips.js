@@ -31,7 +31,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 )
             }
             else {
-                tripsService.getTrips({offset: 0, limit: tripsPreviewSize},
+                tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
                     function (res) {
                         //res mocked for now
                         console.log(res);
@@ -48,6 +48,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     }
                 );
             }
+
+            $scope.togglePublic = function() {
+                $scope.public = $scope.public ? false : true;
+            };
 
             $scope.toggleTripsGallery = function() {
                 if($scope.galleryVisible) {

@@ -2,15 +2,13 @@
 
 <div ng-controller="EditTripController">
 
-<div class="container-fluid" style="text-align:center;margin:24px;">
+<div class="container" ng-controller="TripsController" style="text-align: center;">
     <!-- Browse/Discover switcher -->
     <ul class="nav nav-pills" style="display: inline-block;">
-        <li class="active"><a href="#">Browse</a></li>
-        <li class="disabled"><a href="#">Discover</a></li>
+        <li ng-click="togglePublic()"><a href="#">Browse</a></li>
+        <li ng-click="togglePublic()"><a href="#">Discover</a></li>
     </ul>
-</div>
 
-<div class="container" ng-controller="TripsController" style="text-align: center;">
     <div class="row" style="text-align: left;">
         <!-- add trip view-->
         <div class="col-sm-3">
