@@ -36,6 +36,9 @@ angular.module('identity', [])
         return {
             startResetPassword: function(data, success, error) {
                 success()
+            },
+            saveNewPassword: function(data, success, error) {
+                success()
             }
         };
     }])
@@ -89,7 +92,7 @@ angular.module('identity', [])
         }
     }])
 
-    .controller('ResetPasswordController', ['$scope', '$location', 'ResetPasswordService', 'DataShare', function ($scope, $location, ResetPasswordService, DataShare) {
+    .controller('ResetPasswordController', ['$scope', '$location', '$routeParams', 'ResetPasswordService', 'DataShare', function ($scope, $location, $routeParams, ResetPasswordService, DataShare) {
         $scope.emailSentMessage = DataShare.sharedData.emailSentMessage;
 
         $scope.sendResetLink = function () {
@@ -104,8 +107,34 @@ angular.module('identity', [])
                     $scope.errorMessage = "Password reset was unsuccessful"
                 }
             )
-        }
+        };
 
+        $scope.saveNewPassword = function ($event) {
+            var form = $scope.form;
+            form.token = $routeParams.token;
+            form.userId = $routeParams.userid;
+            $scope.errorMessages = [];
+
+            if (form.newPassword !== form.newPasswordRepeat) {
+                $scope.errorMessages.push("Provided passwords don't match");
+            }
+            if (!form.token || !form.userId) {
+                $scope.errorMessages.push("Used reset password link is invalid");
+            }
+
+            if($scope.errorMessages && $scope.errorMessages.length > 0) {
+                $event.preventDefault();
+            } else {
+                ResetPasswordService.saveNewPassword(form,
+                    function(res) {
+                        $location.url('/resetPassword/saved')
+                    },
+                    function(res) {
+                        $scope.errorMessages.push("New password save was unsuccessful")
+                    }
+                )
+            }
+        }
     }])
 
     .factory('DataShare', function(){

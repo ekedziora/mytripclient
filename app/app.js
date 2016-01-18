@@ -22,6 +22,14 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'iden
                 templateUrl: 'template/resetPassword/emailSent.html',
                 controller: 'ResetPasswordController'
             })
+            .when('/resetPassword/newPassword', {
+                templateUrl: 'template/resetPassword/insertNewPassword.html',
+                controller: 'ResetPasswordController'
+            })
+            .when('/resetPassword/saved', {
+                templateUrl: 'template/resetPassword/newPasswordSaved.html',
+                controller: 'ResetPasswordController'
+            })
             .when('/trips', {
                 templateUrl: 'template/trips/trips.html',
                 controller: 'TripsController'
