@@ -11,13 +11,15 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams', 'TripDataShare',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams, tripDataShare) {
 
             var tripsPreviewSize = 3;
             var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
+
+            tripDataShare.tripId = $routeParams.id;
 
             if($scope.focusedTrip) {
                 tripsService.getTrip($scope.focusedTrip,
@@ -156,6 +158,21 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     markers: markers
                 };
             });
+
+            $scope.getMediaList = function() {
+                tripsService.getMediaList({tripId: $scope.focusedTrip},
+                    function(res) {
+                        console.log($scope.focusedTrip);
+                        console.log(res)
+                    },
+                    function(res) {
+                        console.log($scope.focusedTrip);
+                        console.log(res);
+                    }
+                );
+            }
+
+
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
         function ($scope, $filter, tripsService) {
@@ -255,6 +272,14 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 var temp = arr[indexA];
                 arr[indexA] = arr[indexB];
                 arr[indexB] = temp;
+            },
+            getMediaList: function(data, success, error) {
+                $http.get(baseUrl
+                    + 'Trip/getMediaList?tripId='
+                    + data.tripId).then(success, error);
             }
         };
-    }]);
+    }])
+    .factory('TripDataShare', function () {
+        return {tripId: ''};
+    });
