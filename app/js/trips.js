@@ -225,7 +225,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + 'Trip?offset='
                     + (data.offset ? data.offset : 0)
                     + '&limit='
-                    + (data.limit ? data.limit : 0)).then(success, error);
+                    + (data.limit ? data.limit : 0)
+                    + '&isPublic='
+                    + (data.public ? 'true' : 'false')
+                ).then(success, error);
             },
             getTrip: function (tripId, success, error) {
                 $http.get(baseUrl + 'Trip/getTripInfo?id=' + tripId, {
