@@ -40,13 +40,14 @@
             <!-- Waypoints -->
             <a href="" class="list-group-item" ng-click="listWaypoints()">
                 <span class = "badge">{{map.markers.length}}</span>
-                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged" ng-click="" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></h4>
+                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged" ng-click="saveChangedWaypoints()" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></h4>
             </a>
             <div class="list-group" ng-show="waypoints">
                 <div ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
                     <a href="" ng-click="removeWaypoint($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-remove"></span></a>
                     <a ng-hide="$index == waypoints.length-1" href="" ng-click="moveWaypointDown($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-download"></span></a>
                     <a ng-hide="$index == 0" href="" ng-click="moveWaypointUp($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-upload"></span></a>
+                    <div># {{$index + 1}}</div>
                     <div>City: {{waypoint.coords.city}}</div>
                     <div>Lat: {{waypoint.coords.latitude}}</div>
                     <div>Lon: {{waypoint.coords.longitude}}</div>

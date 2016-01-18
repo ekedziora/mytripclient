@@ -120,6 +120,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.waypointsChanged = true;
             };
 
+            $scope.saveChangedWaypoints = function() {
+                //TODO changeRoutePointsOrder($scope.waypoints)
+            };
+
             var markers = [];
             //mapping trips from response to map markers
             angular.forEach(mockedTripResponse.route.points, function (val) {
@@ -224,7 +228,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + (data.limit ? data.limit : 0)).then(success, error);
             },
             getTrip: function (tripId, success, error) {
-                $http.get(baseUrl + 'Trip/getTrip?tripId=' + tripId, {
+                $http.get(baseUrl + 'Trip/getTripInfo?id=' + tripId, {
                     headers: {'Content-Type': 'application/json; charset=utf-8'}
                 }).success(success, error);
             },
