@@ -30,6 +30,16 @@ angular.module('identity', [])
         };
     }])
 
+    .service('ResetPasswordService', ['$http', function($http) {
+        var baseUrl = "http://mytrippwapi.azurewebsites.net/api/";
+
+        return {
+            startResetPassword: function(data, success, error) {
+                success()
+            }
+        };
+    }])
+
     .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', 'DataShare', function($scope, IdentityService, $localStorage, $location, dataShare) {
         $scope.signedUpMessage = dataShare.message;
         $scope.signIn = function () {
@@ -79,6 +89,28 @@ angular.module('identity', [])
         }
     }])
 
+    .controller('ResetPasswordController', ['$scope', '$location', 'ResetPasswordService', 'DataShare', function ($scope, $location, ResetPasswordService, DataShare) {
+        $scope.emailSentMessage = DataShare.sharedData.emailSentMessage;
+
+        $scope.sendResetLink = function () {
+            var email = $scope.email;
+
+            ResetPasswordService.startResetPassword(email,
+                function(res) {
+                    DataShare.sharedData.emailSentMessage = 'We\'ve just send you an email to ' + $scope.email + '. Please follow its instructions to reset your password.';
+                    $location.url('/resetPassword/emailSent')
+                },
+                function(res) {
+                    $scope.errorMessage = "Password reset was unsuccessful"
+                }
+            )
+        }
+
+    }])
+
     .factory('DataShare', function(){
-        return { message: '' };
+        return {
+            message: '',
+            sharedData: {}
+        };
     });
