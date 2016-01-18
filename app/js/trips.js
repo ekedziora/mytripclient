@@ -19,18 +19,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             $scope.focusedTrip = $routeParams.id;
 
-            if($scope.focusedTrip) {
-                tripsService.getTrip($scope.focusedTrip,
-                    function (res) {
-                        $scope.trip = res;
-                    },
-                    function (res) {
-                        $scope.trip = res;
-                        console.log(res);
-                    }
-                )
-            }
-            else {
+            $scope.requestTrips = function() {
                 tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
                     function (res) {
                         //res mocked for now
@@ -47,10 +36,30 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         console.log(res);
                     }
                 );
+            };
+
+            if($scope.focusedTrip) {
+                tripsService.getTrip($scope.focusedTrip,
+                    function (res) {
+                        $scope.trip = res;
+                    },
+                    function (res) {
+                        $scope.trip = res;
+                        console.log(res);
+                    }
+                )
+            }
+            else {
+                $scope.requestTrips();
             }
 
-            $scope.togglePublic = function() {
-                $scope.public = $scope.public ? false : true;
+            $scope.public = false;
+            
+            $scope.togglePublic = function(status) {
+                if($scope.public != status) {
+                    $scope.public = status;
+                    $scope.requestTrips();
+                }
             };
 
             $scope.toggleTripsGallery = function() {
@@ -171,6 +180,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     // load data
                 }
                 else {
+                    $scope.tripPublic = false;
                     $scope.tripName = null;
                     $scope.tripDesc = null;
                     $scope.tripFile = null;
@@ -192,6 +202,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     //post request
                     tripsService.insertTripRoute(
                         {
+                            public: $scope.tripPublic,
                             name: $scope.tripName,
                             desc: $scope.tripDesc,
                             file: file
@@ -246,8 +257,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + data.name
                     + '&description='
                     + data.desc
-                    + '&isPublic='
-                    + data.isPublic ? 'true' : 'false',
+                    + '&isPublic=false',
                     fd, { headers: {'Content-Type': undefined} }
                 ).then(success, error);
             },//todo

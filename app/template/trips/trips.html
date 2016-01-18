@@ -3,11 +3,11 @@
 <div ng-controller="EditTripController">
 
 <!--<div class="container" ng-controller="TripsController" style="text-align: center;">-->
-<div class="container" style="text-align: center;">
+    <div class="container" style="text-align: center;">
     <!-- Browse/Discover switcher -->
-    <ul class="nav nav-pills" style="display: inline-block;">
-        <li ng-click="togglePublic()"><a href="#">Browse</a></li>
-        <li ng-click="togglePublic()"><a href="#">Discover</a></li>
+    <ul class="nav nav-pills" style="display: inline-block;margin:0 0 16px;">
+        <li ng-click="togglePublic(false)"  style="padding:8px;margin:0 4px;border:2px solid #cdcdcd;">Browse</li>
+        <li ng-click="togglePublic(true)"  style="padding:8px;margin:0 4px;border:2px solid #cdcdcd;">Discover</li>
     </ul>
 
     <div class="row" style="text-align: left;">
