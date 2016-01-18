@@ -11,15 +11,26 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams', 'TripDataShare',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams, tripDataShare) {
 
             var tripsPreviewSize = 3;
             var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
 
-            $scope.requestTrips = function() {
+            if($scope.focusedTrip) {
+                tripsService.getTrip($scope.focusedTrip,
+                    function (res) {
+                        $scope.trip = res;
+                    },
+                    function (res) {
+                        $scope.trip = res;
+                        console.log(res);
+                    }
+                )
+            }
+            else {
                 tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
                     function (res) {
                         //res mocked for now
@@ -165,6 +176,21 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     markers: markers
                 };
             });
+
+            $scope.getMediaList = function() {
+                tripsService.getMediaList({tripId: $scope.focusedTrip},
+                    function(res) {
+                        console.log($scope.focusedTrip);
+                        console.log(res)
+                    },
+                    function(res) {
+                        console.log($scope.focusedTrip);
+                        console.log(res);
+                    }
+                );
+            }
+
+
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
         function ($scope, $filter, tripsService) {
@@ -265,6 +291,14 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 var temp = arr[indexA];
                 arr[indexA] = arr[indexB];
                 arr[indexB] = temp;
+            },
+            getMediaList: function(data, success, error) {
+                $http.get(baseUrl
+                    + 'Trip/getMediaList?tripId='
+                    + data.tripId).then(success, error);
             }
         };
-    }]);
+    }])
+    .factory('TripDataShare', function () {
+        return {tripId: ''};
+    });

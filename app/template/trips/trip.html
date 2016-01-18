@@ -5,19 +5,11 @@
         <h3><a href="#/trips">< Back to trips</a></h3>
         <div class="img-rounded">
             <ui-gmap-google-map center='map.center' zoom='map.zoom' draggable='true' events='map.events'>
-                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon"
+                                idkey="m.id"></ui-gmap-marker>
                 <ui-gmap-polylines models="trackings" path="'geotracks'" static="true" fit="true"></ui-gmap-polylines>
             </ui-gmap-google-map>
         </div>
-        <!--<div>
-            <fieldset class="form-group">
-                <br>
-                <label for="exampleInputEmail1">Enter a name for the trip:</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter name">
-                <small class="text-muted">The trip will be saved for later use</small>
-            </fieldset>
-        <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Save trip route</button>
-        </div>-->
     </div>
     <div class="col-md-3">
         <h2>Trip {{focusedTrip}}</h2>
@@ -39,14 +31,20 @@
 
             <!-- Waypoints -->
             <a href="" class="list-group-item" ng-click="listWaypoints()">
-                <span class = "badge">{{map.markers.length}}</span>
-                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged" ng-click="saveChangedWaypoints()" class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></h4>
+                <span class="badge">{{map.markers.length}}</span>
+                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged"
+                                                                    ng-click="saveChangedWaypoints()"
+                                                                    class="glyphicon glyphicon-floppy-disk"
+                                                                    aria-hidden="true"></span></h4>
             </a>
             <div class="list-group" ng-show="waypoints">
                 <div ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
-                    <a href="" ng-click="removeWaypoint($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-remove"></span></a>
-                    <a ng-hide="$index == waypoints.length-1" href="" ng-click="moveWaypointDown($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-download"></span></a>
-                    <a ng-hide="$index == 0" href="" ng-click="moveWaypointUp($index)"><span style="float: right; padding: 3px" class="glyphicon glyphicon-upload"></span></a>
+                    <a href="" ng-click="removeWaypoint($index)"><span style="float: right; padding: 3px"
+                                                                       class="glyphicon glyphicon-remove"></span></a>
+                    <a ng-hide="$index == waypoints.length-1" href="" ng-click="moveWaypointDown($index)"><span
+                            style="float: right; padding: 3px" class="glyphicon glyphicon-download"></span></a>
+                    <a ng-hide="$index == 0" href="" ng-click="moveWaypointUp($index)"><span
+                            style="float: right; padding: 3px" class="glyphicon glyphicon-upload"></span></a>
                     <div># {{$index + 1}}</div>
                     <div>City: {{waypoint.coords.city}}</div>
                     <div>Lat: {{waypoint.coords.latitude}}</div>
@@ -55,4 +53,26 @@
             </div>
         </div>
     </div>
+    <button ng-click="getMediaList()">Get media list</button>
+</div>
+
+
+<div class="container" ng-controller="PhotoController">
+    <!--  -->
+    <table>
+        <td align="center">
+            <h3>Add photo</h3>
+            <form role="form" id="editForm" method="post" data-ng-submit="addPhoto(photoFile)">
+
+                <div class="form-group">
+                    <label for="photoFile">Route:</label>
+                    <input type="file" class="file" id="photoFile" required ng-model="photoFile" accept=".png"
+                           onchange="angular.element(this).scope().setFile(this)">
+                    <span class="file-custom"></span>
+                </div>
+
+                <button type="submit" class="btn btn-default">Save</button>
+            </form>
+        </td>
+    </table>
 </div>
