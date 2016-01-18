@@ -19,18 +19,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             $scope.focusedTrip = $routeParams.id;
 
-            if($scope.focusedTrip) {
-                tripsService.getTrip($scope.focusedTrip,
-                    function (res) {
-                        $scope.trip = res;
-                    },
-                    function (res) {
-                        $scope.trip = res;
-                        console.log(res);
-                    }
-                )
-            }
-            else {
+            $scope.requestTrips = function() {
                 tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
                     function (res) {
                         //res mocked for now
@@ -49,11 +38,27 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 );
             };
 
+            if($scope.focusedTrip) {
+                tripsService.getTrip($scope.focusedTrip,
+                    function (res) {
+                        $scope.trip = res;
+                    },
+                    function (res) {
+                        $scope.trip = res;
+                        console.log(res);
+                    }
+                )
+            }
+            else {
+                $scope.requestTrips();
+            };
+
             $scope.public = false;
             
             $scope.togglePublic = function(status) {
                 if($scope.public != status) {
                     $scope.public = status;
+                    $scope.requestTrips();
                 }
             };
 
