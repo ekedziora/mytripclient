@@ -64,6 +64,7 @@ angular.module('identity', [])
         $scope.signUp = function () {
             var formData = {
                 username: $scope.username,
+                email: $scope.email,
                 password: $scope.password
             };
 
