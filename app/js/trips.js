@@ -164,6 +164,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.saveChangedWaypoints = function () {
+                delete $scope.updateRouteSuccessful;
                 var updatedRoute = utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
                 tripsService.editTripRoute(
                     {
@@ -172,9 +173,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     },
                     function (res) {
                         console.log(res);
+                        $scope.updateRouteSuccessful = true;
                     },
                     function (res) {
                         console.log(res);
+                        $scope.updateRouteSuccessful = false;
                     }
                 );
             };
