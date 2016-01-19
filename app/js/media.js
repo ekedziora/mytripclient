@@ -33,8 +33,24 @@ angular.module('media', [])
             );
         };
 
+        $scope.deletePhoto = function() {
+            photoService.deletePhoto({photoId: $scope.deletePhotoId},
+                function (res) {
+                    $scope.successDeletingPhoto = true;
+                    $scope.getPhotos();
+                },
+                function (res) {
+                    $scope.successDeletingPhoto = false;
+                }
+            )
+        };
+
         $scope.setFile = function(photoFile) {
             $scope.photoFile=photoFile.files[0];
+        };
+
+        $scope.setDeletePhotoId = function(deletePhotoId) {
+          $scope.deletePhotoId = deletePhotoId;
         };
 
         $scope.getPhotos();
@@ -53,6 +69,9 @@ angular.module('media', [])
             },
             getPhotos: function(data, success, error) {
                 $http.get(baseUrl + 'Media/getPhotos?tripId=' + data.tripId).then(success, error);
+            },
+            deletePhoto: function (data, success, error) {
+                $http.delete(baseUrl + 'Media/deletePhoto?' + $.param(data)).then(success, error);
             }
         };
     }])
@@ -88,8 +107,24 @@ angular.module('media', [])
             );
         };
 
+        $scope.deleteMovie = function() {
+            videoService.deleteMovie({movieId: $scope.deleteMovieId},
+                function (res) {
+                    $scope.successDeletingMovie = true;
+                    $scope.getMovies();
+                },
+                function (res) {
+                    $scope.successDeletingMovie = false;
+                }
+            )
+        };
+
         $scope.setFile = function(videoFile) {
             $scope.videoFile = videoFile.files[0];
+        };
+
+        $scope.setDeleteMovieId = function(deleteMovieId) {
+            $scope.deleteMovieId = deleteMovieId;
         };
 
         $scope.getMovies();
@@ -108,6 +143,9 @@ angular.module('media', [])
             },
             getMovies: function(data, success, error) {
                 $http.get(baseUrl + 'Media/getMovies?tripId=' + data.tripId).then(success, error);
+            },
+            deleteMovie: function (data, success, error) {
+                $http.delete(baseUrl + 'Media/deleteMovie?' + $.param(data)).then(success, error);
             }
         };
     }]);
