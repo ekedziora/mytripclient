@@ -80,8 +80,8 @@
             <a class="btn btn-sm" style="position: absolute; top: 1px; right: 1px;" data-toggle="modal" data-target="#deletePhotoModal" ng-click="setDeletePhotoId(photo.id)">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
-            <img ng-show="photo.Status == 0" ng-src="{{photo.ThumbnailUrl}}" class="img-responsive">
-            <h4 ng-show="photo.Status == 1">Converting in progress...</h4>
+            <img ng-show="photo.Status == 1" ng-src="{{photo.ThumbnailUrl}}" class="img-responsive">
+            <h4 ng-show="photo.Status == 0">Converting in progress...</h4>
         </div>
 
         <div class="modal fade" id="addPhotoModal" role="dialog">
