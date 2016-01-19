@@ -5,7 +5,9 @@
             <div ng-show="message" class="form-group alert alert-danger fade in">
                 {{message}}
             </div>
-            <h2>Sign up</h2>
+            <div style="text-align: center; opacity: 0.75;margin: 16px 0;">
+                <img src="graphics/register_logo.png">
+            </div>
             <form role="form" id="signUpForm" method="post" ng-submit="signUp()">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Username" ng-model="username" required>
@@ -16,9 +18,10 @@
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="Password" ng-model="password" required>
                 </div>
-                <button type="submit" class="btn btn-default">Register</button>
+                <button style="width:100%; height: 48px;border-radius: 8px;" type="submit" class="btn btn-default">Sign up</button>
             </form>
-            <p><a href="#/signIn">Sign in</a> if you are already signed up</p>
+            <br>
+            <p style="text-align: left; font-size: 0.75em;padding: 0;"><a href="#/signIn">Sign in</a> if you are already signed up</p>
         </div>
     </div>
 </div>
