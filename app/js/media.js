@@ -1,8 +1,21 @@
 angular.module('media', [])
 
     .controller('PhotoController', ['$scope', 'PhotoService', 'TripDataShare', function ($scope, photoService, tripDataShare) {
-        $scope.addPhoto = function (photoFile) {
-            console.log("Adding new file for trip: "+tripDataShare.tripId);
+        $scope.getPhotos = function() {
+            console.log("Get photos for trip: " + $scope.focusedTrip);
+            photoService.getPhotos({tripId: $scope.focusedTrip},
+                function(res) {
+                    $scope.photos = res.data;
+                    console.log(res)
+                },
+                function(res) {
+                    console.log(res);
+                }
+            );
+        };
+
+        $scope.addPhoto = function (photoFile, modalId) {
+            console.log("Adding new file for trip: " + tripDataShare.tripId);
             console.log(photoFile);
             photoService.addPhoto(
                 {
@@ -13,13 +26,13 @@ angular.module('media', [])
                 function (res) {
                     console.log("Successfully added the file!");
                     $scope.successAddingNewPhoto = true;
-                    $scope.addingNewPhoto = false;
+                    $("#" + modalId).modal('hide');
+                    $scope.getPhotos();
                     console.log(res);
                 },
                 function (res) {
                     console.log("Failure adding the file!");
                     $scope.successAddingNewPhoto = false;
-                    $scope.addingNewPhoto = false;
                     console.log(res);
                 }
             );
@@ -29,23 +42,7 @@ angular.module('media', [])
             $scope.photoFile=photoFile.files[0];
         };
 
-        $scope.getPhotos = function() {
-            photoService.getPhotos({tripId: $scope.focusedTrip},
-                function(res) {
-                    console.log($scope.focusedTrip);
-                    console.log(res)
-                },
-                function(res) {
-                    console.log($scope.focusedTrip);
-                    console.log(res);
-                }
-            );
-        };
-
-        $scope.showPhotoForm = function () {
-            $scope.successAddingNewPhoto = undefined;
-            $scope.addingNewPhoto = true;
-        }
+        $scope.getPhotos();
     }])
 
     .service('PhotoService', ['$http', function ($http) {
