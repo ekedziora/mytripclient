@@ -45,6 +45,8 @@ angular.module('identity', [])
 
     .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', 'DataShare', function($scope, IdentityService, $localStorage, $location, dataShare) {
         $scope.signedUpMessage = dataShare.message;
+        $scope.error = dataShare.sharedData.requestErrorMessage;
+
         $scope.signIn = function () {
             dataShare.message = "";
 

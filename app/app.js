@@ -43,7 +43,7 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'iden
                 controller: 'TripsController'
             });
 
-        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+        $httpProvider.interceptors.push(['$q', '$location', '$localStorage', 'DataShare', function($q, $location, $localStorage, dataShare) {
             return {
                 'request': function (config) {
                     config.headers = config.headers || {};
@@ -53,7 +53,12 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'iden
                     return config;
                 },
                 'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
+                    if (response.status === 401) {
+                        dataShare.sharedData.requestErrorMessage = "You have to be signed in to access requested resource";
+                        $location.path('/signIn');
+                    }
+                    if (response.status === 403) {
+                        dataShare.sharedData.requestErrorMessage = "You don't have access to requested resource";
                         $location.path('/signIn');
                     }
                     return $q.reject(response);
