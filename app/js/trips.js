@@ -115,11 +115,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.moveWaypointUp = function (id) {
                 utils.swapArrayElements($scope.waypoints, id, id - 1);
                 $scope.waypointsChanged = true;
+                $scope.saveChangedWaypoints();
             };
 
             $scope.moveWaypointDown = function (id) {
                 utils.swapArrayElements($scope.waypoints, id, id + 1);
                 $scope.waypointsChanged = true;
+                $scope.saveChangedWaypoints();
             };
 
             $scope.removeWaypoint = function (id) {
@@ -128,25 +130,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.saveChangedWaypoints = function () {
+                utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
                 //TODO changeRoutePointsOrder($scope.waypoints)
-                var changedWaypoints = [];
-                angular.forEach($scope.waypoints, function (val) {
-                    this.push({
-                        latitude: val.coords.latitude+0.1,
-                        longitude: val.coords.longitude-0.1,
-                        city: val.coords.city
-                    });
-                }, changedWaypoints);
-                utils.prepareMapForRoute($scope, changedWaypoints, uiGmapGoogleMapApi);
-                /*uiGmapGoogleMapApi.then(function (maps) {
-                    $scope.map =
-                    {
-                        markers: $scope.markers
-                    };
-                });*/
             };
 
-            utils.prepareMapForRoute($scope, mockedTripResponse.route.points, uiGmapGoogleMapApi);
+            utils.prepareMapForRoute($scope, mockedTripResponse.route.points, uiGmapGoogleMapApi, true);
+
 
 
         }])
@@ -255,7 +244,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 arr[indexA] = arr[indexB];
                 arr[indexB] = temp;
             },
-            prepareMapForRoute: function ($scope, routes, uiGmapGoogleMapApi) {
+            prepareMapForRoute: function ($scope, routes, uiGmapGoogleMapApi, initMap) {
                 $scope.trackings = [{
                     id: 1,
                     geotracks: []
@@ -263,44 +252,70 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
                 $scope.markers = [];
                 //mapping trips from response to map markers
-                angular.forEach(routes, function (val) {
+                angular.forEach(routes, function (val, index) {
                     $scope.markers.push({
                         id: Date.now(),//todo
                         coords: {
                             latitude: val.latitude,
                             longitude: val.longitude,
                             city: val.city
+                        },
+                        options: {
+                            labelContent : '#'+ (index+1)+ ": " +val.city,
+                            labelAnchor: '15 61',
+                            labelStyle: {
+                                "font-size": "120%",
+                                "border": "1px solid grey",
+                                "background": "white"
+                            },
+                            labelInBackground: false
                         }
                     });
                     //setting trackings
-                    //console.log(val.city);
-                    //console.log(val.latitude);
-                    //console.log(val.longitude);
                     $scope.trackings[0].geotracks.push(
                         {
                             latitude: val.latitude,
                             longitude: val.longitude
                         }
                     );
-                    console.log($scope.trackings[0].geotracks);
                 });
 
 
                 uiGmapGoogleMapApi.then(function (maps) {
-                    $scope.map =
-                    {
-                        center: {
-                            latitude: 52,
-                            longitude: 20
-                        },
-                        zoom: 6,
-                        markers: $scope.markers
-                    };
+                    if (initMap) {
+                        $scope.map =
+                        {
+                            center: {
+                                latitude: 52,
+                                longitude: 20
+                            },
+                            zoom: 6,
+                            markers: $scope.markers,
+                        };
+                    } else {
+                        $scope.map =
+                        {
+                            markers: $scope.markers
+                        };
+                    }
                     /*var bounds = new google.maps.LatLngBounds();
-                    for (var i in $scope.markers) // your marker list here
-                        bounds.extend($scope.markers[i].position)
-                    $scope.map.fitBounds(bounds);*/
+                     for (var i in $scope.markers) // your marker list here
+                     bounds.extend($scope.markers[i].position)
+                     $scope.map.fitBounds(bounds);*/
                 });
+            },
+
+            refreshWaypointsOnMap: function ($scope, uiGmapGoogleMapApi) {
+                var changedWaypoints = [];
+                angular.forEach($scope.waypoints, function (val) {
+                    this.push({
+                        latitude: val.coords.latitude + 0.5,
+                        longitude: val.coords.longitude - 0.7,
+                        city: val.coords.city,
+                        options: val.options
+                    });
+                }, changedWaypoints);
+                this.prepareMapForRoute($scope, changedWaypoints, uiGmapGoogleMapApi, false);
             }
         };
     })
