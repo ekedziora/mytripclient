@@ -20,7 +20,11 @@
         </div>
     </div>
     <div class="col-md-3">
-        <h3>Details</h3>
+        <h3>Details
+            <span ng-show="updateRouteSuccessful == true" class="label label-success">Updated</span>
+            <span ng-show="updateRouteSuccessful == false" class="label label-danger">Failure</span>
+        </h3>
+
         <div class="list-group">
 
             <!-- Waypoints -->
@@ -47,7 +51,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </span>
 </div>
 <hr>
 <div class="container" style="margin-top: 5px">
