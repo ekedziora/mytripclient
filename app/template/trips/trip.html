@@ -71,8 +71,8 @@
         <br/>
         <br/>
 
-        <div class="col-md-5 table-bordered" style="margin: 3px; background-color: #fcf8e3" ng-repeat="photo in photos">
-            <img ng-show="photo.Status == 1" src="{{photo.ThumbnailUrl}}" class="img-responsive">
+        <div class="col-md-5 table-bordered" style="margin: 3px" ng-repeat="photo in photos">
+            <img ng-show="photo.Status == 1" ng-src="{{photo.ThumbnailUrl}}" class="img-responsive">
             <h4 ng-show="photo.Status == 0">Converting in progress...</h4>
         </div>
 
@@ -121,8 +121,17 @@
             </a>
         </div>
 
-        <div class="col-md-2" ng-repeat="movie in movies">
-            {{ movie }}
+        <br/>
+        <br/>
+
+        <div ng-show="movie.Status == 1" class="col-md-5 table-bordered embed-responsive embed-responsive-16by9" style="margin: 3px" ng-repeat="movie in movies">
+            <video src="{{movies.ThumbnailUrl}}" controls class="embed-responsive-item">
+                Your browser does not support video player
+            </video>
+        </div>
+
+        <div ng-show="movie.Status == 0" class="col-md-5 table-bordered" style="margin: 3px" ng-repeat="movie in movies">
+            <h4>Converting in progress...</h4>
         </div>
 
         <div class="modal fade" id="addVideoModal" role="dialog">
