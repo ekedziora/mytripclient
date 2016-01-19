@@ -12,9 +12,9 @@
 
     <div class="row" style="text-align: left;">
         <!-- add trip view-->
-        <div class="col-sm-3">
+        <div ng-show="!public" class="col-sm-3">
             <div class="trip-box-frame">
-                <div id="trip-box-new" ng-click="openEdit()">
+                <div id="trip-box-new"  ng-click="openEdit()">
                     <span style="font-size: 80px; color: green; position: relative; top: 50%; transform: translateY(-50%);"
                           class="glyphicon glyphicon-plus"></span>
                 </div>
