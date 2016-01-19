@@ -106,14 +106,13 @@
     cursor: pointer;
     width: 100%;
     height: 100%;
-    background: rgb(55, 55, 55);
     text-align: center;
     border: 2px solid #000;
     border-radius: inherit;
 }
 
 #trip-box-new:hover {
-    background: rgb(80, 80, 80);
+    background: rgba(155, 155, 155, 0.25);
 }
 
 .trip-box-slot {
