@@ -4,14 +4,15 @@
             <div class="alert alert-danger" ng-if="errorMessage">
                 {{ errorMessage }}
             </div>
-            <br>
-            <h2>Reset password</h2>
+            <div style="text-align: center; opacity: 0.75;margin: 16px 0;">
+                <img src="graphics/password_logo.png">
+            </div>
             <form role="form" id="resetPasswordForm" method="post" ng-submit="sendResetLink()">
                 <div class="form-group">
-                    Provide email for your existing account:
+                    <p style="text-align: center">Provide email for your existing account</p>
                     <input type="email" class="form-control" placeholder="Email" ng-model="email" required>
                 </div>
-                <button type="submit" class="btn btn-default">Confirm</button>
+                <button style="width:100%; height: 48px;border-radius: 8px;" type="submit" class="btn btn-default">Reset password</button>
             </form>
         </div>
     </div>
