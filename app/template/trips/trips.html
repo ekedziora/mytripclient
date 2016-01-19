@@ -5,10 +5,10 @@
 <!--<div class="container" ng-controller="TripsController" style="text-align: center;">-->
 <div class="container" style="text-align: center;">
     <!-- Browse/Discover switcher -->
-    <ul class="nav nav-pills" style="display: inline-block;margin:0 0 16px;">
-        <li ng-click="togglePublic(false)"  style="padding:8px;margin:0 4px;border:2px solid #cdcdcd; cursor: pointer;">Browse</li>
-        <li ng-click="togglePublic(true)"  style="padding:8px;margin:0 4px;border:2px solid #cdcdcd; cursor: pointer;">Discover</li>
-    </ul>
+    <div style="text-align: center">
+        <p class="gallery-switch" ng-class="{'active' : !public}" id="gallery-browse" ng-click="togglePublic(false)"></p>
+        <p class="gallery-switch" ng-class="{'active' : public}" id="gallery-discover" ng-click="togglePublic(true)"></p>
+    </div>
 
     <div class="row" style="text-align: left;">
         <!-- add trip view-->

@@ -1,0 +1,29 @@
+.gallery-switch {
+    display:inline-block;
+    width: 235px;
+    height:200px;
+}
+
+#gallery-browse  {
+    background: url(../graphics/browse_gray.png) no-repeat;
+}
+
+#gallery-browse:hover {
+    background: url(../graphics/browse_color.png) no-repeat;
+}
+
+#gallery-browse.active {
+    background: url(../graphics/browse_color.png) no-repeat;
+}
+
+#gallery-discover  {
+    background: url(../graphics/discover_gray.png) no-repeat;
+}
+
+#gallery-discover.active  {
+    background: url(../graphics/discover_color.png) no-repeat;
+}
+
+#gallery-discover:hover  {
+    background: url(../graphics/discover_color.png) no-repeat;
+}
