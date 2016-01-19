@@ -27,3 +27,16 @@
 #gallery-discover:hover  {
     background: url(../graphics/discover_color.png) no-repeat;
 }
+
+.gallery-button {
+    height: 48px;
+    margin: 8px 0;
+}
+
+.gallery-expand {
+    background: url(../graphics/expand_icon.png) no-repeat center;
+}
+
+.gallery-shrink {
+    background: url(../graphics/shrink_icon.png) no-repeat center;
+}

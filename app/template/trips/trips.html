@@ -49,8 +49,7 @@
     </div>
 
     <!-- Expand button -->
-    <div style="text-align: center;">
-        <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed" ng-click="toggleTripsGallery()"></span>
+    <div class="gallery-button" ng-class="{'gallery-shrink' : galleryVisible, 'gallery-expand' : ! galleryVisible}" ng-click="toggleTripsGallery()">
     </div>
 
     <div class="row" style="text-align: left;">
