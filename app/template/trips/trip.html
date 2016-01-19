@@ -47,17 +47,25 @@
         <button ng-click="getPhotos()">Get photos</button>
         <table>
             <td align="center">
-                <h3>Add photo</h3>
-                <form role="form" id="editForm" method="post" data-ng-submit="addPhoto(photoFile)">
+                <div ng-show="successAddingNewPhoto == true" class="alert alert-success">
+                    Successfully added a new photo!
+                </div>
+                <div ng-show="successAddingNewPhoto == false" class="alert alert-warning">
+                    Failed to add a new photo!
+                </div>
+                <h3 ng-hide="addingNewPhoto"><a href="" ng-click="showPhotoForm()">
+                    <span class="glyphicon glyphicon-plus" style="font-size: 1em;"></span> Add a new photo
+                </a></h3>
+
+                <form ng-show="addingNewPhoto" role="form" id="editForm" method="post" data-ng-submit="addPhoto(photoFile)">
 
                     <div class="form-group">
-                        <label for="photoFile">Route:</label>
                         <input type="file" class="file" id="photoFile" required ng-model="photoFile" accept=".png"
                                onchange="angular.element(this).scope().setFile(this)">
                         <span class="file-custom"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-default">Save</button>
+                    <button type="submit" class="btn btn-default">Add</button>
                 </form>
             </td>
         </table>

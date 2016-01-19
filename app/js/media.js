@@ -12,10 +12,14 @@ angular.module('media', [])
                 },
                 function (res) {
                     console.log("Successfully added the file!");
+                    $scope.successAddingNewPhoto = true;
+                    $scope.addingNewPhoto = false;
                     console.log(res);
                 },
                 function (res) {
                     console.log("Failure adding the file!");
+                    $scope.successAddingNewPhoto = false;
+                    $scope.addingNewPhoto = false;
                     console.log(res);
                 }
             );
@@ -36,6 +40,11 @@ angular.module('media', [])
                     console.log(res);
                 }
             );
+        };
+
+        $scope.showPhotoForm = function () {
+            $scope.successAddingNewPhoto = undefined;
+            $scope.addingNewPhoto = true;
         }
     }])
 
