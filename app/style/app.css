@@ -57,9 +57,13 @@ a.inner-element {
 }
 
 .footer {
+  position: absolute;
   background: #000;
   color: #505050;
   padding: 16px 0;
+  margin: 0;
+  bottom: 0;
+  width: 100%;
   font-size: 12px;
   font-family: 'Open Sans';
 }
