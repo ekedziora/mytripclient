@@ -190,16 +190,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.tripFile = file.files[0];
             };
 
-            $scope.openEdit = function (id) {
+            $scope.openEdit = function (trip) {
                 console.log('Edit request');
 
-                $scope.editedTrip = id;
+                $scope.editedTrip = trip;
 
-                if (id != null) {
+                if (trip != null) {
                     // load data
-                    console.log(id);
-                    $scope.tripName = id.Name;
-                    $scope.tripDesc = id.Description;
+                    console.log(trip);
+                    $scope.tripName = trip.Name;
+                    $scope.tripDesc = trip.Description;
+                    $scope.tripFile = null;
                 }
                 else {
                     $scope.tripName = null;
@@ -232,7 +233,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                             console.log("ok");
                             console.log(res);
                             $scope.requested = false;
-                            window.location = "#/trips";
                         },
                         function (res) {
                             console.log("fail");
@@ -243,7 +243,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 }
                 else {
                     // update trip
-                    console.log("saving a trip object");
+                    console.log("updating a trip object");
+
+                    tripsService.editTrip({id: $scope.editedTrip.id, name: $scope.tripName, desc: $scope.tripDesc},
+                        function(res) {
+                            console.log('OK');
+                            $scope.requested = false;
+                        },
+                        function(res) {
+                            console.log(res);
+                        }
+                    );
                 }
             };
 

@@ -105,9 +105,9 @@
                     <label for="tripdesc">Description:</label>
                     <textarea class="form-control" rows="3" id="tripdesc" style="resize: none;" required ng-model="tripDesc"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-show="!editedTrip">
                     <label for="triproute">Route:</label>
-                    <input type="file" class="file" id="triproute" required ng-model="tripFile" accept=".txt" onchange="angular.element(this).scope().setFile(this)">
+                    <input type="file" class="file" id="triproute" ng-model="tripFile" accept=".txt" onchange="angular.element(this).scope().setFile(this)">
                 </div>
                 <button type="button" class="btn btn-default" ng-click="closeEdit()">Cancel</button>
                 <button type="submit" class="btn btn-default">Save</button>
