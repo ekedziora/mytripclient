@@ -1,23 +1,46 @@
-<nav class="navbar navbar-default">
-    <div class="container-fluid" ng-controller="IdentityController">
+<!--<nav class="navbar navbar-default">-->
+    <!--<div class="container-fluid" ng-controller="IdentityController">-->
 
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <!--<div class="navbar-header">-->
+            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+                <!--<span class="icon-bar"></span>-->
+            <!--</button>-->
 
-            <a class="navbar-brand" href="#">mytrip</a>
+            <!--<a class="navbar-brand" href="#">mytrip</a>-->
+        <!--</div>-->
+
+        <!--<div class="collapse navbar-collapse" id="myNavbar">-->
+            <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--<li ng-if="!username"><a href="#/signIn"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>-->
+                <!--<li ng-if="username"><a href="#/signIn" ng-click="signOut()"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>-->
+                <!--<li ng-if="username"><a href="#"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</nav>-->
+
+<nav style="background: #fff; border-bottom:4px solid #e6e6e6; margin-bottom: 32px;padding:0px;">
+
+        <div class="container" style="height:110px;background: url(graphics/header_background.jpg) no-repeat 120px;" ng-controller="IdentityController">
+
+            <div class="row" >
+                <div style="float:left;">
+                    <a href="#"><img src="graphics/trip_logo.png" style="margin: 4px 0;"> </a>
+                </div>
+
+                <div style="float:right;text-align: right">
+                    <div style="display: inline-block;vertical-align: middle">
+                        <p ng-if="username" style="font-variant: small-caps ;font-size:1.5em;padding: 0 8px;margin: 0;"><a href="#" style="font-family:'Open Sans';color:#373737;text-decoration:none">{{username}}</a></p>
+                        <p ng-if="username" style="line-height:1em;font-size:0.9em;padding: 0 8px;margin: 0;"><a style="color:#373737;text-decoration:none" href="#/signIn">Sign out</a></p>
+                        <p ng-if="!username" style="line-height:1em;font-size:0.9em;padding: 0 8px;margin: 0;"><a style="color:#373737;text-decoration:none" href="#/signIn">Sign in</a></p>
+                    </div>
+                    <a href="#"><img src="graphics/user_logo.png" style="margin:18px 0;height: 72px;width: auto;opacity:0.65;"> </a>
+                </div>
+            </div>
+
         </div>
 
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li ng-if="!username"><a href="#/signIn"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
-                <li ng-if="username"><a href="#/signIn" ng-click="signOut()"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
-                <li ng-if="username"><a href="#"><span class="glyphicon glyphicon-user"></span> {{username}}</a></li>
-            </ul>
-        </div>
-
-    </div>
 </nav>
