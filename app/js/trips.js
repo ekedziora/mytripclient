@@ -21,7 +21,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             tripDataShare.tripId = $routeParams.id;
 
             $scope.requestTrips = function () {
-                tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
+                tripsService.getTrips({offset: 0, limit: ($scope.public ? tripsPreviewSize + 1 : tripsPreviewSize), public: ($scope.public ? true : false)},
                     function (res) {
                         //res mocked for now
                         console.log(res);
