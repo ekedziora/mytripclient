@@ -115,18 +115,19 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.moveWaypointUp = function (id) {
                 utils.swapArrayElements($scope.waypoints, id, id - 1);
                 $scope.waypointsChanged = true;
-                $scope.saveChangedWaypoints();
+                utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
             };
 
             $scope.moveWaypointDown = function (id) {
                 utils.swapArrayElements($scope.waypoints, id, id + 1);
                 $scope.waypointsChanged = true;
-                $scope.saveChangedWaypoints();
+                utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
             };
 
             $scope.removeWaypoint = function (id) {
                 $scope.waypoints.splice(id, 1);
                 $scope.waypointsChanged = true;
+                utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
             };
 
             $scope.saveChangedWaypoints = function () {

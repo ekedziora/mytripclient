@@ -5,7 +5,7 @@
         <h3><a href="#/trips">< Back to trips</a></h3>
         <div class="img-rounded">
             <ui-gmap-google-map center='map.center' zoom='map.zoom' draggable='true' events='map.events'>
-                <ui-gmap-marker doRebuildAll="true" ng-repeat="m in map.markers" coords="m.coords" icon="m.icon"
+                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon"
                                 idkey="m.id" options="m.options">
                 </ui-gmap-marker>
                 <ui-gmap-polylines doRebuildAll="true" models="trackings" path="'geotracks'" static="false" fit="true"></ui-gmap-polylines>
@@ -42,7 +42,7 @@
         </div>
     </div>
 </div>
-
+<hr>
 <div class="container" style="margin-top: 5px">
     <div class="col-md-6" ng-controller="PhotoController">
         <button ng-click="getPhotos()">Get photos</button>
