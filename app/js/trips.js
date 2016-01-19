@@ -89,7 +89,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.moreTrips = function () {
-                var offset = tripsPreviewSize + ($scope.trips ? $scope.trips.length : 0);
+                var offset = ($scope.public ? tripsPreviewSize + 1 : tripsPreviewSize) + ($scope.trips ? $scope.trips.length : 0);
                 console.log('offset: ' + offset);
                 tripsService.getTrips({offset: offset, limit: tripsLoadingSize, public: $scope.public},
                     function (res) {
