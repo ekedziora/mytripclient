@@ -5,9 +5,9 @@
         <h3><a href="#/trips">< Back to trips</a></h3>
         <div class="img-rounded">
             <ui-gmap-google-map center='map.center' zoom='map.zoom' draggable='true' events='map.events'>
-                <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon"
+                <ui-gmap-marker dorebuildall="true" ng-repeat="m in map.markers" coords="m.coords" icon="m.icon"
                                 idkey="m.id"></ui-gmap-marker>
-                <ui-gmap-polylines models="trackings" path="'geotracks'" static="true" fit="true"></ui-gmap-polylines>
+                <ui-gmap-polylines models="trackings" path="'geotracks'" static="false" fit="true"></ui-gmap-polylines>
             </ui-gmap-google-map>
         </div>
     </div>
