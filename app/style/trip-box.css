@@ -6,6 +6,7 @@
     border-radius: 8px;
     overflow: hidden;
     text-align: left;
+    background: url('../graphics/trip_background.png') no-repeat 0% 100%;
 }
 
 .trip-box-loaded {
