@@ -46,7 +46,14 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <!-- Expand button -->
+    <div style="text-align: center;">
+        <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed" ng-click="toggleTripsGallery()"></span>
+    </div>
+
+    <div class="row" style="text-align: left;">
         <div ng-show="galleryVisible" class="col-sm-3" ng-repeat="trip in trips | filter:{IsPublic:false}">
             <div class="trip-box-frame">
                 <div class="trip-box-loaded">
@@ -71,11 +78,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Expand button -->
-    <div class="row" style="text-align: center;">
-        <span class="glyphicon glyphicon-th" aria-hidden="true" style="margin:24px;font-size: 24px;cursor: not-allowed" ng-click="toggleTripsGallery()"></span>
     </div>
 
     <!-- Load more button -->
