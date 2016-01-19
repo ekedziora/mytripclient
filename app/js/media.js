@@ -2,13 +2,12 @@ angular.module('media', [])
 
     .controller('PhotoController', ['$scope', 'PhotoService', 'TripDataShare', function ($scope, photoService, tripDataShare) {
         $scope.getPhotos = function() {
-            console.log("Get photos for trip: " + $scope.focusedTrip);
             photoService.getPhotos({tripId: $scope.focusedTrip},
                 function(res) {
                     $scope.photos = res.data;
-                    console.log(res)
                 },
                 function(res) {
+                    console.log("Failed to load photos for trip: " + $scope.focusedTrip);
                     console.log(res);
                 }
             );
@@ -24,16 +23,12 @@ angular.module('media', [])
                     file: photoFile
                 },
                 function (res) {
-                    console.log("Successfully added the file!");
                     $scope.successAddingNewPhoto = true;
                     $("#" + modalId).modal('hide');
                     $scope.getPhotos();
-                    console.log(res);
                 },
                 function (res) {
-                    console.log("Failure adding the file!");
                     $scope.successAddingNewPhoto = false;
-                    console.log(res);
                 }
             );
         };
@@ -67,10 +62,10 @@ angular.module('media', [])
             videoService.getMovies({tripId: $scope.focusedTrip},
                 function(res) {
                     $scope.movies = res.data;
-                    console.log($scope.focusedTrip);
                 },
                 function(res) {
-                    console.log($scope.focusedTrip);
+                    console.log("Failed to load photos for trip: " + $scope.focusedTrip);
+                    console.log(res);
                 }
             );
         };
@@ -85,10 +80,10 @@ angular.module('media', [])
                 function (res) {
                     $("#" + modalId).modal('hide');
                     $scope.getMovies();
-                    console.log("Successfully added the file!");
+                    $scope.successAddingNewVideo = true;
                 },
                 function (res) {
-                    console.log("Failure adding the file!");
+                    $scope.successAddingNewVideo = false;
                 }
             );
         };

@@ -61,11 +61,11 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         } else if(res['RouteStatus'] == 0) {
                             console.log("Trip routes formatting is in progress");
                             console.log(res);
-                            $scope.tripFormattingStatus = "Trip routes formatting is in progress";
+                            $scope.tripFormattingStatus = "Trip routes formatting is in progress, map cannot be loaded now.";
                         } else if(res['RouteStatus'] == 2) {
                             console.log("Trip data has invalid format, could not load");
                             console.log(res);
-                            $scope.tripFormattingStatus = "Trip data has invalid format, could not load the map";
+                            $scope.tripFormattingStatus = "Trip data has invalid format, could not load the map.";
                         }
                     },
                     function (res) {
