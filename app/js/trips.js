@@ -175,13 +175,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.openEdit = function (id) {
+                console.log('Edit request');
+
                 $scope.editedTrip = id;
 
                 if (id != null) {
                     // load data
+                    console.log(id);
+                    $scope.tripName = id.Name;
+                    $scope.tripDesc = id.Description;
                 }
                 else {
-                    $scope.tripPublic = false;
                     $scope.tripName = null;
                     $scope.tripDesc = null;
                     $scope.tripFile = null;
