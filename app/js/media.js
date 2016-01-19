@@ -107,8 +107,24 @@ angular.module('media', [])
             );
         };
 
+        $scope.deleteMovie = function() {
+            videoService.deleteMovie({movieId: $scope.deleteMovieId},
+                function (res) {
+                    $scope.successDeletingMovie = true;
+                    $scope.getMovies();
+                },
+                function (res) {
+                    $scope.successDeletingMovie = false;
+                }
+            )
+        };
+
         $scope.setFile = function(videoFile) {
             $scope.videoFile = videoFile.files[0];
+        };
+
+        $scope.setDeleteMovieId = function(deleteMovieId) {
+            $scope.deleteMovieId = deleteMovieId;
         };
 
         $scope.getMovies();
@@ -127,6 +143,9 @@ angular.module('media', [])
             },
             getMovies: function(data, success, error) {
                 $http.get(baseUrl + 'Media/getMovies?tripId=' + data.tripId).then(success, error);
+            },
+            deleteMovie: function (data, success, error) {
+                $http.delete(baseUrl + 'Media/deleteMovie?' + $.param(data)).then(success, error);
             }
         };
     }]);
