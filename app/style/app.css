@@ -1,9 +1,5 @@
 /* app css stylesheet */
 
-.body {
-  font-family: 'Open Sans';
-}
-
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -58,4 +54,20 @@ a.inner-element {
   right: 0;
   text-align:center;
   padding-top:calc(50% - 30px);
+}
+
+.footer {
+  background: #000;
+  color: #505050;
+  padding: 16px 0;
+  font-size: 12px;
+  font-family: 'Open Sans';
+}
+
+.footer-copyright {
+  color: #dcdcdc;
+}
+
+.footer-cookies {
+  font-style: italic;
 }
