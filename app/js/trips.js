@@ -45,6 +45,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         $scope.trip = res;
                         if(res['RouteStatus'] == 1) {
                             utils.prepareMapForRoute($scope, res['Route']['points'], uiGmapGoogleMapApi, true);
+                            uiGmapGoogleMapApi.then(function (maps) {
+                                $scope.map =
+                                {
+                                    center: {
+                                        latitude: 52,
+                                        longitude: 20
+                                    },
+                                    zoom: 6,
+                                    markers: $scope.markers
+                                };
+                            });
                             console.log("Trip has been loaded successfully");
                             console.log(res);
                         } else if(res['RouteStatus'] == 0) {
@@ -153,9 +164,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.saveChangedWaypoints = function () {
-                utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
+                var updatedRoute = utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
                 tripsService.editTripRoute(
-                    {route: $scope.trip['Route'], tripId: $scope.focusedTrip},
+                    {
+                        route: updatedRoute,
+                        tripId: $scope.focusedTrip
+                    },
                     function (res) {
                         console.log(res);
                     },
@@ -163,7 +177,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         console.log(res);
                     }
                 );
-                //TODO changeRoutePointsOrder($scope.waypoints)
             };
 
         }])
@@ -283,7 +296,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $http.post(baseUrl
                     + 'Trip/editRoute?id='
                     + data.tripId,
-                    angular.toJson([{"key":"route","value":data.route}]), {headers: {'Content-Type': "application/json"}}
+                    angular.toJson(data.route), {headers: {'Content-Type': "application/json"}}
                 ).then(success, error);
             }
         };
@@ -333,38 +346,34 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 });
 
 
-                uiGmapGoogleMapApi.then(function (maps) {
-                    if (initMap) {
-                        $scope.map =
-                        {
-                            center: {
-                                latitude: 52,
-                                longitude: 20
-                            },
-                            zoom: 6,
-                            markers: $scope.markers
-                        };
-                    } else {
-                        $scope.map =
-                        {
-                            markers: $scope.markers
-                        };
-                    }
-                });
+                $scope.map = {
+                    markers: $scope.markers
+                };//TODO nie wiem czemu te markery nie zawsze sie usuwaja na mapie, ale ogolnie usuwanie dziala
             },
 
             refreshWaypointsOnMap: function ($scope, uiGmapGoogleMapApi) {
                 var changedWaypoints = [];
+                var routePointsToUpdate = [];
                 angular.forEach($scope.waypoints, function (val) {
-                    //TODO coś szwankuje czasem i dubluje markery? chyba przez wczesniejsze +/-, do sprawdzenia
                     this.push({
                         latitude: val.coords.latitude,
                         longitude: val.coords.longitude,
                         city: val.coords.city,
                         options: val.options
                     });
+                    routePointsToUpdate.push(
+                        {
+                            latitude: val.coords.latitude,
+                            longitude: val.coords.longitude,
+                            city: val.coords.city
+                        }
+                    );
                 }, changedWaypoints);
                 this.prepareMapForRoute($scope, changedWaypoints, uiGmapGoogleMapApi, false);
+
+                var updatedRoute = $scope.trip['Route'];
+                updatedRoute['points'] = routePointsToUpdate;
+                return updatedRoute;
             }
         };
     })
