@@ -166,20 +166,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 };
             });
 
-            $scope.getMediaList = function() {
-                tripsService.getMediaList({tripId: $scope.focusedTrip},
-                    function(res) {
-                        console.log($scope.focusedTrip);
-                        console.log(res)
-                    },
-                    function(res) {
-                        console.log($scope.focusedTrip);
-                        console.log(res);
-                    }
-                );
-            }
-
-
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
         function ($scope, $filter, tripsService) {
@@ -280,11 +266,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 var temp = arr[indexA];
                 arr[indexA] = arr[indexB];
                 arr[indexB] = temp;
-            },
-            getMediaList: function(data, success, error) {
-                $http.get(baseUrl
-                    + 'Trip/getMediaList?tripId='
-                    + data.tripId).then(success, error);
             }
         };
     }])

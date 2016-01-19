@@ -15,28 +15,15 @@
         <h2>Trip {{focusedTrip}}</h2>
         <div class="list-group">
 
-            <!-- Pictures -->
-            <a href="" class="list-group-item active" ng-click="listPictures()">
-                <h4 class="list-group-item-heading">Pictures</h4>
-                <!--<p class="list-group-item-text">tekst</p>-->
-            </a>
-            <div class="list-group" ng-show="pictures">
-                <a ng-repeat="pic in pictures" href="#" class="list-group-item inner-element">{{pic.name}}</a>
+            <!-- Waypoints -->
+            <div href="" class="list-group-item">
+                <span class="badge">{{map.markers.length}}</span>
+                <h4 class="list-group-item-heading">Waypoints
+                    <span ng-click="listWaypoints()" ng-class="waypoints == null ? 'glyphicon glyphicon-menu-down' : 'glyphicon glyphicon-menu-up'" style="cursor: pointer;"></span>
+                    <span ng-show="waypointsChanged" ng-click="saveChangedWaypoints()" class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="cursor: pointer;"></span>
+                </h4>
             </div>
 
-            <!-- Videos -->
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Videos</h4>
-            </a>
-
-            <!-- Waypoints -->
-            <a href="" class="list-group-item" ng-click="listWaypoints()">
-                <span class="badge">{{map.markers.length}}</span>
-                <h4 class="list-group-item-heading">Waypoints <span ng-show="waypointsChanged"
-                                                                    ng-click="saveChangedWaypoints()"
-                                                                    class="glyphicon glyphicon-floppy-disk"
-                                                                    aria-hidden="true"></span></h4>
-            </a>
             <div class="list-group" ng-show="waypoints">
                 <div ng-repeat="waypoint in waypoints" href="#" class="list-group-item inner-element">
                     <a href="" ng-click="removeWaypoint($index)"><span style="float: right; padding: 3px"
@@ -53,12 +40,11 @@
             </div>
         </div>
     </div>
-    <button ng-click="getMediaList()">Get media list</button>
 </div>
 
 <div class="container" style="margin-top: 5px">
     <div class="col-md-6" ng-controller="PhotoController">
-        <!--  -->
+        <button ng-click="getPhotos()">Get photos</button>
         <table>
             <td align="center">
                 <h3>Add photo</h3>
@@ -79,6 +65,7 @@
 
     <div class="col-md-6" ng-controller="VideoController">
         <h3 class="col-md-10">Videos</h3>
+        <button ng-click="getMovies()">Get photos</button>
         <a class="btn btn-default" style="margin-top: 15px" role="button" data-toggle="modal" data-target="#deleteModal">Add video</a>
 
         <div class="modal fade" id="deleteModal" role="dialog">

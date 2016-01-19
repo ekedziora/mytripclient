@@ -24,6 +24,19 @@ angular.module('media', [])
         $scope.setFile = function(photoFile) {
             $scope.photoFile=photoFile.files[0];
         };
+
+        $scope.getPhotos = function() {
+            photoService.getPhotos({tripId: $scope.focusedTrip},
+                function(res) {
+                    console.log($scope.focusedTrip);
+                    console.log(res)
+                },
+                function(res) {
+                    console.log($scope.focusedTrip);
+                    console.log(res);
+                }
+            );
+        }
     }])
 
     .service('PhotoService', ['$http', function ($http) {
@@ -36,6 +49,9 @@ angular.module('media', [])
 
                 $http.post(baseUrl + 'Media/addPhoto?id=' + data.id + '&tripId=' + data.tripId, fd,
                     {headers: {'Content-Type': undefined}}).then(success, error);
+            },
+            getPhotos: function(data, success, error) {
+                $http.get(baseUrl + 'Media/getPhotos?tripId=' + data.tripId).then(success, error);
             }
         };
     }])
@@ -62,6 +78,19 @@ angular.module('media', [])
         $scope.setFile = function(videoFile) {
             $scope.videoFile = videoFile.files[0];
         };
+
+        $scope.getMovies = function() {
+            videoService.getMovies({tripId: $scope.focusedTrip},
+                function(res) {
+                    console.log($scope.focusedTrip);
+                    console.log(res)
+                },
+                function(res) {
+                    console.log($scope.focusedTrip);
+                    console.log(res);
+                }
+            );
+        }
     }])
 
     .service('VideoService', ['$http', function ($http) {
@@ -74,6 +103,9 @@ angular.module('media', [])
 
                 $http.post(baseUrl + 'Media/addMovie?id=' + data.id + '&tripId=' + data.tripId, fd,
                     {headers: {'Content-Type': undefined}}).then(success, error);
+            },
+            getMovies: function(data, success, error) {
+                $http.get(baseUrl + 'Media/getMovies?tripId=' + data.tripId).then(success, error);
             }
         };
     }]);
