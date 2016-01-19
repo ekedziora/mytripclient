@@ -80,11 +80,19 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-6" ng-controller="VideoController" style="background: rgb(250,250,250); padding: 15px; border: 1px solid rgb(230,230,230)">
-        <h3 class="col-md-10">Videos</h3>
-        <button ng-click="getMovies()">Get videos</button>
-        <a class="btn btn-default" style="margin-top: 15px" role="button" data-toggle="modal" data-target="#deleteModal">Add video</a>
+        <h3>Videos</h3>
 
-        <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="col-md-12">
+            <a data-toggle="modal" data-target="#addVideoModal">
+                <span class="glyphicon glyphicon-plus"></span> Add video
+            </a>
+        </div>
+
+        <div class="col-md-2" ng-repeat="movie in movies">
+            {{ movie }}
+        </div>
+
+        <div class="modal fade" id="addVideoModal" role="dialog">
             <div class="modal-dialog">
 
                 <div class="modal-content">
@@ -93,7 +101,7 @@
                         <h4 class="modal-title">Add video</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form" id="addVideoForm" method="post" ng-submit="addVideo(videoFile)">
+                        <form role="form" id="addVideoForm" method="post" ng-submit="addVideo(videoFile, 'addVideoModal')">
                             <div class="form-group">
                                 <label for="videoFile">Choose video file:</label>
                                 <input type="file" class="file" id="videoFile" ng-model="photoFile" accept="video/mpeg"

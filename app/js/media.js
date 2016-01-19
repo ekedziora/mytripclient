@@ -66,7 +66,19 @@ angular.module('media', [])
     }])
 
     .controller('VideoController', ['$scope', 'VideoService', 'TripDataShare', function ($scope, videoService, tripDataShare) {
-        $scope.addVideo = function (videoFile) {
+        $scope.getMovies = function() {
+            videoService.getMovies({tripId: $scope.focusedTrip},
+                function(res) {
+                    $scope.movies = res.data;
+                    console.log($scope.focusedTrip);
+                },
+                function(res) {
+                    console.log($scope.focusedTrip);
+                }
+            );
+        };
+
+        $scope.addVideo = function (videoFile, modalId) {
             videoService.addVideo(
                 {
                     id: 1,//TODO do usunięcia
@@ -74,12 +86,12 @@ angular.module('media', [])
                     file: videoFile
                 },
                 function (res) {
+                    $("#" + modalId).modal('hide');
+                    $scope.getMovies();
                     console.log("Successfully added the file!");
-                    console.log(res);
                 },
                 function (res) {
                     console.log("Failure adding the file!");
-                    console.log(res);
                 }
             );
         };
@@ -88,18 +100,7 @@ angular.module('media', [])
             $scope.videoFile = videoFile.files[0];
         };
 
-        $scope.getMovies = function() {
-            videoService.getMovies({tripId: $scope.focusedTrip},
-                function(res) {
-                    console.log($scope.focusedTrip);
-                    console.log(res)
-                },
-                function(res) {
-                    console.log($scope.focusedTrip);
-                    console.log(res);
-                }
-            );
-        }
+        $scope.getMovies();
     }])
 
     .service('VideoService', ['$http', function ($http) {
