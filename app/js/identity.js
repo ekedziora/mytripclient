@@ -30,6 +30,19 @@ angular.module('identity', [])
         };
     }])
 
+    .service('ResetPasswordService', ['$http', function($http) {
+        var baseUrl = "http://mytrippwapi.azurewebsites.net/api/";
+
+        return {
+            startResetPassword: function(data, success, error) {
+                $http.get(baseUrl + 'Account/PasswordResetEmail?' + $.param(data)).then(success, error)
+            },
+            saveNewPassword: function(data, success, error) {
+                $http.post(baseUrl + 'Account/PasswordReset', data).then(success, error)
+            }
+        };
+    }])
+
     .controller('SignInController', ['$scope', 'IdentityService', '$localStorage','$location', 'DataShare', function($scope, IdentityService, $localStorage, $location, dataShare) {
         $scope.signedUpMessage = dataShare.message;
         $scope.signIn = function () {
@@ -46,11 +59,10 @@ angular.module('identity', [])
 
             IdentityService.signIn(formData,
                 function(res) {
-                    var user = {
+                    $localStorage.user = {
                         username: $scope.username,
                         token: res.access_token
                     };
-                    $localStorage.user = user;
                     $location.path('/trips');
                 },
                 function(res) {
@@ -69,7 +81,7 @@ angular.module('identity', [])
             };
 
             IdentityService.signUp(formData,
-                function(res) {
+                function() {
                     dataShare.message = "You've successfully signed up, now you can sign in.";
                     $location.url('/signIn')
                 },
@@ -80,6 +92,70 @@ angular.module('identity', [])
         }
     }])
 
+    .controller('ResetPasswordController', ['$scope', '$location', '$routeParams', 'ResetPasswordService', 'DataShare', function ($scope, $location, $routeParams, ResetPasswordService, DataShare) {
+        $scope.emailSentMessage = DataShare.sharedData.emailSentMessage;
+
+        $scope.sendResetLink = function () {
+            var data = {
+                email: $scope.email
+            };
+
+            ResetPasswordService.startResetPassword(data,
+                function() {
+                    DataShare.sharedData.emailSentMessage = 'We\'ve just send you an email to ' + data.email + '. Please follow its instructions to reset your password.';
+                    $location.url('/resetPassword/emailSent')
+                },
+                function(res) {
+                    if (res.status === 404) {
+                        $scope.errorMessage = "There's no user with given email"
+                    } else {
+                        $scope.errorMessage = "Password reset was unsuccessful"
+                    }
+                }
+            )
+        };
+
+        $scope.saveNewPassword = function ($event) {
+            var form = $scope.form;
+            token = $routeParams.token;
+            userId = $routeParams.userid;
+            $scope.errorMessages = [];
+
+            if (form.newPassword !== form.newPasswordRepeat) {
+                $scope.errorMessages.push("Provided passwords don't match");
+            }
+            if (!token || !userId) {
+                $scope.errorMessages.push("Used reset password link is invalid");
+            }
+
+            if($scope.errorMessages && $scope.errorMessages.length > 0) {
+                $event.preventDefault();
+            } else {
+                var data = {
+                    UserId: userId,
+                    Password: form.newPassword,
+                    Token: token
+                };
+
+                ResetPasswordService.saveNewPassword(data,
+                    function() {
+                        $location.url('/resetPassword/saved')
+                    },
+                    function(res) {
+                        if (res.status == 400) {
+                            $scope.errorMessages.push("Used reset password link is invalid")
+                        } else {
+                            $scope.errorMessages.push("New password save was unsuccessful")
+                        }
+                    }
+                )
+            }
+        }
+    }])
+
     .factory('DataShare', function(){
-        return { message: '' };
+        return {
+            message: '',
+            sharedData: {}
+        };
     });
