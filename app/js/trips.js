@@ -11,13 +11,14 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
         }])
 
-    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams', 'TripDataShare',
-        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams, tripDataShare) {
+    .controller('TripsController', ['$scope', '$filter', 'uiGmapGoogleMapApi', 'TripsService', '$routeParams', 'TripDataShare','Utils',
+        function ($scope, $filter, uiGmapGoogleMapApi, tripsService, $routeParams, tripDataShare,utils) {
 
             var tripsPreviewSize = 3;
             var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
+            tripDataShare.tripId = $routeParams.id;
 
             $scope.requestTrips = function() {
                 tripsService.getTrips({offset: 0, limit: tripsPreviewSize, public: ($scope.public ? true : false)},
@@ -25,8 +26,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         //res mocked for now
                         console.log(res);
                         //res = mockedTripsResponse;
-                        console.log("HEREEEEE!!!!!!!!!");
-                        console.log(res.data);
                         $scope.preview = res.data;
                         $scope.trips = [];
                         $scope.photo = $filter('filter')(mockedPhotos, {
@@ -44,6 +43,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 tripsService.getTrip($scope.focusedTrip,
                     function (res) {
                         $scope.trip = res;
+                        console.log(res);
                     },
                     function (res) {
                         $scope.trip = res;
@@ -111,18 +111,13 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     $scope.waypoints = $scope.map.markers;
             };
 
-            $scope.trackings = [{
-                id: 1,
-                geotracks: []
-            }];
-
             $scope.moveWaypointUp = function(id) {
-                tripsService.swapArrayElements($scope.waypoints, id, id-1);
+                utils.swapArrayElements($scope.waypoints, id, id-1);
                 $scope.waypointsChanged = true;
             };
 
             $scope.moveWaypointDown = function(id) {
-                tripsService.swapArrayElements($scope.waypoints, id, id+1);
+                utils.swapArrayElements($scope.waypoints, id, id+1);
                 $scope.waypointsChanged = true;
             };
 
@@ -133,28 +128,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
             $scope.saveChangedWaypoints = function() {
                 //TODO changeRoutePointsOrder($scope.waypoints)
+
             };
 
-            var markers = [];
-            //mapping trips from response to map markers
-            angular.forEach(mockedTripResponse.route.points, function (val) {
-                this.push({
-                    id: Date.now(),//todo
-                    coords: {
-                        latitude: val.latitude,
-                        longitude: val.longitude,
-                        city: val.city
-                    }
-                });
-                //setting trackings
-                $scope.trackings[0].geotracks.push(
-                    {
-                        latitude: val.latitude,
-                        longitude: val.longitude
-                    }
-                )
-
-            }, markers);
+            utils.prepareMapForRoute($scope);
 
             uiGmapGoogleMapApi.then(function (maps) {
                 $scope.map =
@@ -164,7 +141,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         longitude: 20
                     },
                     zoom: 6,
-                    markers: markers
+                    markers: $scope.markers
                 };
             });
 
@@ -263,14 +240,48 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + '&isPublic=false',
                     fd, { headers: {'Content-Type': undefined} }
                 ).then(success, error);
-            },//todo
+            }
+        };
+    }])
+
+    .factory('Utils', function () {
+        return {
             swapArrayElements: function(arr, indexA, indexB) {
                 var temp = arr[indexA];
                 arr[indexA] = arr[indexB];
                 arr[indexB] = temp;
+            },
+            prepareMapForRoute: function($scope) {
+                $scope.trackings = [{
+                    id: 1,
+                    geotracks: []
+                }];
+
+                var markers = [];
+                //mapping trips from response to map markers
+                angular.forEach(mockedTripResponse.route.points, function (val) {
+                    this.push({
+                        id: Date.now(),//todo
+                        coords: {
+                            latitude: val.latitude,
+                            longitude: val.longitude,
+                            city: val.city
+                        }
+                    });
+                    //setting trackings
+                    $scope.trackings[0].geotracks.push(
+                        {
+                            latitude: val.latitude,
+                            longitude: val.longitude
+                        }
+                    )
+
+                }, markers);
+                $scope.markers = markers;
             }
         };
-    }])
+    })
+
     .factory('TripDataShare', function () {
         return {tripId: ''};
     });
