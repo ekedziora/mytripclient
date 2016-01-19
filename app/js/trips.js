@@ -91,7 +91,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.moreTrips = function () {
                 var offset = tripsPreviewSize + ($scope.trips ? $scope.trips.length : 0);
                 console.log('offset: ' + offset);
-                tripsService.getTrips({offset: offset, limit: tripsLoadingSize},
+                tripsService.getTrips({offset: offset, limit: tripsLoadingSize, public: $scope.public},
                     function (res) {
 
                         // If loaded last [res.data.size] trips,
@@ -101,6 +101,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                         $scope.trips = $scope.trips ? $scope.trips.concat(res.data) : res.data;
                     },
                     function (res) {
+                        console.log(res);
+                    }
+                );
+            };
+
+            $scope.shareTrip = function(trip) {
+                tripsService.editTrip({id: trip.id, share: !trip.isPublic},
+                    function(res) {
+                        trip.isPublic = !trip.isPublic;
+                    },
+                    function(res) {
                         console.log(res);
                     }
                 );
@@ -249,6 +260,18 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + data.desc
                     + '&isPublic=false',
                     fd, {headers: {'Content-Type': undefined}}
+                ).then(success, error);
+            },
+            editTrip: function(data, success, error) {
+                console.log('request trip edit: ');
+                console.log(data);
+
+                $http.post(baseUrl
+                    + 'Trip/editTrip?id='
+                    + data.id
+                    + (data.share != null ? '&isPublic=' + data.share : '')
+                    + (data.name != null ? '&name=' + data.name : '')
+                    + (data.desc != null ? '&description=' + data.desc : '')
                 ).then(success, error);
             },
             editTripRoute: function(data, success, error) {
