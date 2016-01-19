@@ -48,7 +48,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                             console.log("Trip has been loaded successfully");
                             console.log(res);
                         } else if(res['RouteStatus'] == 0) {
-                            console.log("Trip is still being formatted");
+                            console.log("Trip routes formatting is in progress");
                             console.log(res);
                             $scope.tripFormattingStatus = "Trip routes formatting is in progress";
                         } else if(res['RouteStatus'] == 2) {
@@ -138,10 +138,20 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.waypoints.splice(id, 1);
                 $scope.waypointsChanged = true;
                 utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
+                //TODO markery sie nie usuwaja?
             };
 
             $scope.saveChangedWaypoints = function () {
                 utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
+                tripsService.editTripRoute(
+                    {route: $scope.trip['Route'], tripId: $scope.focusedTrip},
+                    function (res) {
+                        console.log(res);
+                    },
+                    function (res) {
+                        console.log(res);
+                    }
+                );
                 //TODO changeRoutePointsOrder($scope.waypoints)
             };
 
@@ -242,14 +252,15 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 ).then(success, error);
             },
             editTripRoute: function(data, success, error) {
+                console.log(data);
+
+                //var fd = new FormData();
+                //fd.append('route', angular.toJson(data.route));
+
                 $http.post(baseUrl
                     + 'Trip/editRoute?id='
-                    + data.id
-                    + '&route.id='
-                    + data.desc
-                    + '&route.points=' +
-                    "",
-                    fd, {headers: {'Content-Type': undefined}}
+                    + data.tripId,
+                    angular.toJson([{"key":"route","value":data.route}]), {headers: {'Content-Type': "application/json"}}
                 ).then(success, error);
             }
         };
