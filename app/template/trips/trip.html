@@ -72,7 +72,7 @@
         <br/>
 
         <div class="col-md-5 table-bordered" style="margin: 3px" ng-repeat="photo in photos">
-            <img ng-show="photo.Status == 1" src="{{photo.ThumbnailUrl}}" class="img-responsive">
+            <img ng-show="photo.Status == 1" ng-src="{{photo.ThumbnailUrl}}" class="img-responsive">
             <h4 ng-show="photo.Status == 0">Converting in progress...</h4>
         </div>
 
