@@ -52,31 +52,50 @@
 <hr>
 <div class="container" style="margin-top: 5px">
     <div class="col-md-5" ng-controller="PhotoController" style="background: rgb(250,250,250); padding: 15px; border: 1px solid rgb(230,230,230)"><!--kolorki na razie pomocniczo-->
-        <button ng-click="getPhotos()">Get photos</button>
-        <table>
-            <td align="center">
-                <div ng-show="successAddingNewPhoto == true" class="alert alert-success">
-                    Successfully added a new photo!
-                </div>
-                <div ng-show="successAddingNewPhoto == false" class="alert alert-danger">
-                    Failed to add a new photo!
-                </div>
-                <h3 ng-hide="addingNewPhoto"><a href="" ng-click="showPhotoForm()">
-                    <span class="glyphicon glyphicon-plus" style="font-size: 1em;"></span> Add a new photo
-                </a></h3>
+        <div ng-show="successAddingNewPhoto == true" class="alert alert-success">
+            Successfully added a new photo!
+        </div>
+        <h3>Photos</h3>
 
-                <form ng-show="addingNewPhoto" role="form" id="editForm" method="post" data-ng-submit="addPhoto(photoFile)">
+        <div class="col-md-12">
+            <a data-toggle="modal" data-target="#addPhotoModal">
+                <span class="glyphicon glyphicon-plus"></span> Add photo
+            </a>
+        </div>
 
-                    <div class="form-group">
-                        <input type="file" class="file" id="photoFile" required ng-model="photoFile" accept=".png"
-                               onchange="angular.element(this).scope().setFile(this)">
-                        <span class="file-custom"></span>
+        <div class="col-md-2" ng-repeat="photo in photos">
+            {{ photo }}
+        </div>
+
+        <div class="modal fade" id="addPhotoModal" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add photo</h4>
                     </div>
+                    <div class="modal-body">
+                        <div ng-show="successAddingNewPhoto == false" class="alert alert-danger">
+                            Failed to add a new photo!
+                        </div>
+                        <form role="form" id="addPhotoForm" method="post" data-ng-submit="addPhoto(photoFile, 'addPhotoModal')">
+                            <div class="form-group">
+                                <label for="videoFile">Choose photo file:</label>
+                                <input type="file" class="file" id="photoFile" ng-model="photoFile" accept=".png"
+                                       onchange="angular.element(this).scope().setFile(this)" required>
+                                <span class="file-custom"></span>
+                            </div>
 
-                    <button type="submit" class="btn btn-default">Add</button>
-                </form>
-            </td>
-        </table>
+                            <button type="submit" class="btn btn-default">Save</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-6" ng-controller="VideoController" style="background: rgb(250,250,250); padding: 15px; border: 1px solid rgb(230,230,230)">
@@ -104,7 +123,7 @@
                         <form role="form" id="addVideoForm" method="post" ng-submit="addVideo(videoFile, 'addVideoModal')">
                             <div class="form-group">
                                 <label for="videoFile">Choose video file:</label>
-                                <input type="file" class="file" id="videoFile" ng-model="photoFile" accept="video/mpeg"
+                                <input type="file" class="file" id="videoFile" ng-model="videoFile" accept="video/mpeg"
                                        onchange="angular.element(this).scope().setFile(this)" required>
                                 <span class="file-custom"></span>
                             </div>
