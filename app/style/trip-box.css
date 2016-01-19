@@ -124,3 +124,8 @@
     border-radius: inherit;
     opacity: 0.25;
 }
+
+#scrollArea {
+    height: 370px;
+    overflow: auto;
+}

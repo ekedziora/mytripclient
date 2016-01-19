@@ -43,10 +43,21 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 tripsService.getTrip($scope.focusedTrip,
                     function (res) {
                         $scope.trip = res;
-                        console.log(res);
+                        if(res['RouteStatus'] == 1) {
+                            utils.prepareMapForRoute($scope, res['Route']['points'], uiGmapGoogleMapApi, true);
+                            console.log("Trip has been loaded successfully");
+                            console.log(res);
+                        } else if(res['RouteStatus'] == 0) {
+                            console.log("Trip is still being formatted");
+                            console.log(res);
+                            $scope.tripFormattingStatus = "Trip routes formatting is in progress";
+                        } else if(res['RouteStatus'] == 2) {
+                            console.log("Trip data has invalid format, could not load");
+                            console.log(res);
+                            $scope.tripFormattingStatus = "Trip data has invalid format, could not load the map";
+                        }
                     },
                     function (res) {
-                        $scope.trip = res;
                         console.log(res);
                     }
                 )
@@ -54,7 +65,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             else {
                 $scope.requestTrips();
             }
-            ;
 
             $scope.public = false;
 
@@ -134,10 +144,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 utils.refreshWaypointsOnMap($scope, uiGmapGoogleMapApi);
                 //TODO changeRoutePointsOrder($scope.waypoints)
             };
-
-            utils.prepareMapForRoute($scope, mockedTripResponse.route.points, uiGmapGoogleMapApi, true);
-
-
 
         }])
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
@@ -234,6 +240,17 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + '&isPublic=false',
                     fd, {headers: {'Content-Type': undefined}}
                 ).then(success, error);
+            },
+            editTripRoute: function(data, success, error) {
+                $http.post(baseUrl
+                    + 'Trip/editRoute?id='
+                    + data.id
+                    + '&route.id='
+                    + data.desc
+                    + '&route.points=' +
+                    "",
+                    fd, {headers: {'Content-Type': undefined}}
+                ).then(success, error);
             }
         };
     }])
@@ -255,7 +272,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 //mapping trips from response to map markers
                 angular.forEach(routes, function (val, index) {
                     $scope.markers.push({
-                        id: Date.now(),//todo
+                        id: Date.now(),//todo a na co to komu było?
                         coords: {
                             latitude: val.latitude,
                             longitude: val.longitude,
@@ -291,7 +308,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                                 longitude: 20
                             },
                             zoom: 6,
-                            markers: $scope.markers,
+                            markers: $scope.markers
                         };
                     } else {
                         $scope.map =
@@ -299,19 +316,16 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                             markers: $scope.markers
                         };
                     }
-                    /*var bounds = new google.maps.LatLngBounds();
-                     for (var i in $scope.markers) // your marker list here
-                     bounds.extend($scope.markers[i].position)
-                     $scope.map.fitBounds(bounds);*/
                 });
             },
 
             refreshWaypointsOnMap: function ($scope, uiGmapGoogleMapApi) {
                 var changedWaypoints = [];
                 angular.forEach($scope.waypoints, function (val) {
+                    //TODO coś szwankuje czasem i dubluje markery? chyba przez wczesniejsze +/-, do sprawdzenia
                     this.push({
-                        latitude: val.coords.latitude + 0.5,
-                        longitude: val.coords.longitude - 0.7,
+                        latitude: val.coords.latitude,
+                        longitude: val.coords.longitude,
                         city: val.coords.city,
                         options: val.options
                     });
@@ -323,4 +337,5 @@ angular.module('trips', ['uiGmapgoogle-maps'])
 
     .factory('TripDataShare', function () {
         return {tripId: ''};
-    });
+    })
+;
