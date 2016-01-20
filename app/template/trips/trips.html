@@ -38,7 +38,7 @@
                     </div>
                     <div class="trip-box-menu">
                         <a href="#/trip/{{trip.id}}"><button class="action-button glyphicon glyphicon-road" data-toggle="tooltip" title="Route"></button></a>
-                        <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard"></div>
+                        <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard" ng-click="showPoster(trip.Id)"></div>
                         <div class="action-button glyphicon glyphicon-link" ng-show="trip.isPublic" data-toggle="tooltip" title="Share" ng-click="shareTrip(trip)"></div>
                         <div ng-show="!public" class="action-button glyphicon glyphicon-user" ng-show="!trip.isPublic" data-toggle="tooltip" title="Share" ng-click="shareTrip(trip)"></div>
                         <div ng-show="!public" class="action-button glyphicon glyphicon-pencil" data-toggle="tooltip" title="Edit" ng-click="openEdit(trip)"></div>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="trip-box-menu">
                         <a href="#/trip/{{trip.id}}"><button class="action-button glyphicon glyphicon-road" data-toggle="tooltip" title="Route"></button></a>
-                        <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard"></div>
+                        <div class="action-button glyphicon glyphicon-picture" data-toggle="tooltip" title="Postcard" ng-click="showPoster(trip.Id)"></div>
                         <div ng-show="!public" class="action-button glyphicon glyphicon-link" data-toggle="tooltip" title="Share" ng-click="shareTrip(trip)"></div>
                         <div ng-show="!public" class="action-button glyphicon glyphicon-pencil" data-toggle="tooltip" title="Edit" ng-click="openEdit(trip)"></div>
                     </div>

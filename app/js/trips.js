@@ -128,6 +128,26 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 );
             };
 
+            $scope.showPoster = function(tripId) {
+                tripsService.getTripPoster({tripId: tripId},
+                    function(res) {
+                        console.log(res);
+
+                        var url = res.Url;
+
+                        if(url != null) {
+                            window.open(url, '_blank');
+                        }
+                        else {
+                            alert('Postcard unavailable, try again later');
+                        }
+                    },
+                    function(res) {
+                        console.log(res);
+                    }
+                );
+            };
+
             $scope.photos = mockedPhotos;
 
             $scope.listPictures = function () {
@@ -316,6 +336,10 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                     + data.tripId,
                     angular.toJson(data.route), {headers: {'Content-Type': "application/json"}}
                 ).then(success, error);
+            },
+            getTripPoster: function(data, success, error) {
+                $http.get(baseUrl + 'Trip/getPoster?tripId=' + data.tripId
+                ).success(success, error);
             }
         };
     }])
