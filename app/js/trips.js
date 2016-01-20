@@ -219,7 +219,8 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.saveEdit = function (file) {
                 if ($scope.editedTrip == null) {
                     // create new trip
-                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc + " " + file.name);
+                    console.log('saving..');
+                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
 
                     //post request
                     tripsService.insertTripRoute(
@@ -278,7 +279,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 }).success(success, error);
             },
             insertTripRoute: function (data, success, error) {
-                console.log(data.file);
+                console.log('inserting');
 
                 var fd = new FormData();
                 fd.append('file', data.file);

@@ -7,6 +7,7 @@
     overflow: hidden;
     text-align: left;
     background: url('../graphics/trip_background.png') no-repeat 0% 100%;
+    font-family: 'Open Sans';
 }
 
 .trip-box-loaded {
