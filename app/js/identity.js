@@ -108,11 +108,7 @@ angular.module('identity', [])
                     $location.url('/resetPassword/emailSent')
                 },
                 function(res) {
-                    if (res.status === 404) {
-                        $scope.errorMessage = "There's no user with given email"
-                    } else {
-                        $scope.errorMessage = "Password reset was unsuccessful"
-                    }
+                    $scope.errorMessage = "Password reset was unsuccessful"
                 }
             )
         };
