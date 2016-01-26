@@ -18,6 +18,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
+            $scope.focusedTab = $routeParams.tab;
             $scope.public = ($routeParams.tab == 'discover');
 
             tripDataShare.tripId = $routeParams.id;
@@ -79,7 +80,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.requestTrips();
             }
 
-            $scope.public = false;
+            //$scope.public = false;
 
             $scope.togglePublic = function (status) {
                 if ($scope.public != status) {
