@@ -34,6 +34,10 @@ angular.module('myApp', ['ngRoute', 'ngStorage', 'myApp.version', 'trips', 'iden
                 templateUrl: 'template/trips/trips.html',
                 controller: 'TripsController'
             })
+            .when('/trips/tab/:tab', {
+                templateUrl: 'template/trips/trips.html',
+                controller: 'TripsController'
+            })
             .when('/trip/:id', {
                 templateUrl: 'template/trips/trip.html',
                 controller: 'TripsController'

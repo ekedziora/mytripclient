@@ -18,6 +18,8 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             var tripsLoadingSize = 12;
 
             $scope.focusedTrip = $routeParams.id;
+            $scope.public = ($routeParams.tab == 'discover');
+
             tripDataShare.tripId = $routeParams.id;
 
             $scope.requestTrips = function () {
