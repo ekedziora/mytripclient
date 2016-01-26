@@ -1,6 +1,6 @@
 angular.module('media', [])
 
-    .controller('PhotoController', ['$scope', 'PhotoService', 'TripDataShare', function ($scope, photoService, tripDataShare) {
+    .controller('PhotoController', ['$scope', '$interval', 'PhotoService', 'TripDataShare', function ($scope, $interval, photoService, tripDataShare) {
         $scope.getPhotos = function() {
             photoService.getPhotos({tripId: $scope.focusedTrip},
                 function(res) {
@@ -54,6 +54,10 @@ angular.module('media', [])
         };
 
         $scope.getPhotos();
+
+        $interval(function() {
+            $scope.getPhotos();
+        }, 2000);
     }])
 
     .service('PhotoService', ['$http', function ($http) {
@@ -76,7 +80,7 @@ angular.module('media', [])
         };
     }])
 
-    .controller('VideoController', ['$scope', 'VideoService', 'TripDataShare', function ($scope, videoService, tripDataShare) {
+    .controller('VideoController', ['$scope', '$interval', 'VideoService', 'TripDataShare', function ($scope, $interval, videoService, tripDataShare) {
         $scope.getMovies = function() {
             videoService.getMovies({tripId: $scope.focusedTrip},
                 function(res) {
@@ -128,6 +132,10 @@ angular.module('media', [])
         };
 
         $scope.getMovies();
+
+        $interval(function() {
+            $scope.getMovies();
+        }, 5000);
     }])
 
     .service('VideoService', ['$http', function ($http) {
