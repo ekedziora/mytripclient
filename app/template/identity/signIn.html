@@ -1,6 +1,6 @@
-<div class="container-fluid" ng-controller="SignInController">
+<div class="container-fluid identity-container" ng-controller="SignInController">
     <div class="row">
-        <div class="col-sm-3" style="position:fixed;right:0;background-color:#e6e6e6;height:100%;width:100%;max-width:320px;min-width:256px;float:right;">
+        <div class="col-sm-3 identity-sidebar">
             <div class="alert alert-danger" ng-if="error">{{ error }}</div>
             <br>
             <div ng-show="signedUpMessage" class="alert alert-success">
