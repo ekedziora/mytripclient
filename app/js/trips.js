@@ -26,13 +26,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.requestTrips = function () {
                 tripsService.getTrips({offset: 0, limit: ($scope.public ? tripsPreviewSize + 1 : tripsPreviewSize), public: ($scope.public ? true : false)},
                     function (res) {
-                        //res mocked for now
                         console.log(res);
-                        //res = mockedTripsResponse;
+
                         $scope.preview = res.data;
                         $scope.trips = [];
                         $scope.photo = $filter('filter')(mockedPhotos, {
-                            tripId: 1,//res.data[0].Id,
+                            tripId: 1,
                             defaultBigThumbnail: true
                         }, true);
                     },
@@ -80,8 +79,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.requestTrips();
             }
 
-            //$scope.public = false;
-
             $scope.togglePublic = function (status) {
                 if ($scope.public != status) {
                     $scope.public = status;
@@ -121,8 +118,12 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
             $scope.shareTrip = function(trip) {
+                console.log("Share trip requested");
+
                 tripsService.editTrip({id: trip.id, share: !trip.isPublic},
                     function(res) {
+                        console.log(res);
+
                         trip.isPublic = !trip.isPublic;
                     },
                     function(res) {
@@ -206,6 +207,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
         }])
+
     .controller('EditTripController', ['$scope', '$filter', 'TripsService',
         function ($scope, $filter, tripsService) {
 
@@ -219,8 +221,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 $scope.editedTrip = trip;
 
                 if (trip != null) {
-                    // load data
-                    console.log(trip);
                     $scope.tripName = trip.Name;
                     $scope.tripDesc = trip.Description;
                     $scope.tripFile = null;
@@ -242,10 +242,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             $scope.saveEdit = function (file) {
                 if ($scope.editedTrip == null) {
                     // create new trip
-                    console.log('saving..');
-                    console.log("creating a trip object: " + $scope.tripName + " " + $scope.tripDesc);
-
-                    //post request
                     tripsService.insertTripRoute(
                         {
                             public: $scope.tripPublic,
@@ -254,24 +250,18 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                             file: file
                         },
                         function (res) {
-                            console.log("ok");
                             console.log(res);
                             $scope.requested = false;
                         },
                         function (res) {
-                            console.log("fail");
                             console.log(res);
-                            //$scope.requested = false;
                         }
                     );
                 }
                 else {
                     // update trip
-                    console.log("updating a trip object");
-
                     tripsService.editTrip({id: $scope.editedTrip.id, name: $scope.tripName, desc: $scope.tripDesc},
                         function(res) {
-                            console.log('OK');
                             $scope.requested = false;
                         },
                         function(res) {
@@ -282,6 +272,7 @@ angular.module('trips', ['uiGmapgoogle-maps'])
             };
 
         }])
+
     .service('TripsService', ['$http', function ($http) {
         var baseUrl = "http://mytrippwapi.azurewebsites.net/api/";
 
@@ -302,8 +293,6 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 }).success(success, error);
             },
             insertTripRoute: function (data, success, error) {
-                console.log('inserting');
-
                 var fd = new FormData();
                 fd.append('file', data.file);
 
@@ -317,23 +306,20 @@ angular.module('trips', ['uiGmapgoogle-maps'])
                 ).then(success, error);
             },
             editTrip: function(data, success, error) {
-                console.log('request trip edit: ');
-                console.log(data);
+                console.log("Sending an edit request");
 
-                $http.post(baseUrl
+                var url = baseUrl
                     + 'Trip/editTrip?id='
                     + data.id
                     + (data.share != null ? '&isPublic=' + data.share : '')
                     + (data.name != null ? '&name=' + data.name : '')
-                    + (data.desc != null ? '&description=' + data.desc : '')
-                ).then(success, error);
+                    + (data.desc != null ? '&description=' + data.desc : '');
+
+                console.log(url);
+
+                $http.post(url).then(success, error);
             },
             editTripRoute: function(data, success, error) {
-                console.log(data);
-
-                //var fd = new FormData();
-                //fd.append('route', angular.toJson(data.route));
-
                 $http.post(baseUrl
                     + 'Trip/editRoute?id='
                     + data.tripId,
